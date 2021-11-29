@@ -1,4 +1,4 @@
-package app.prgghale.roomdb.ui.theme
+package app.prgghale.roomdb.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
