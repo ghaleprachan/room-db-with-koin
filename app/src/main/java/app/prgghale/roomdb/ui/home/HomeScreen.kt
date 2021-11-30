@@ -34,38 +34,25 @@ fun HomeScreen(
 ) {
     val context = LocalContext.current
     val addUserState = userViewModel.addUser.observeAsState()
-    val usersState = userViewModel.users.observeAsState()
 
     AppScaffold(title = "Register Users") {
         HomeScreenContent(
             addUser = { user ->
                 userViewModel.addUser(user = user)
-                userViewModel.getUsers()
             }
         )
     }
 
     when (val state = addUserState.value) {
         is UiStates.Loading -> {
-            context.toastS("Adding users")
+            // DO Nothing
         }
         is UiStates.Success -> {
             // userViewModel.getUsers()
+            context.toastS("User Added")
         }
         is UiStates.Error -> {
             context.toastS(state.message ?: "Failed to add user")
-        }
-    }
-
-    when (val state = usersState.value) {
-        is UiStates.Loading -> {
-            context.toastS("Fetching users")
-        }
-        is UiStates.Error -> {
-            context.toastS(state.message ?: "Failed to fetch users")
-        }
-        is UiStates.Success -> {
-            context.toastS(state.data.toJson())
         }
     }
 }
