@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import app.prgghale.roomdb.data.repository.UserRepository
 import app.prgghale.roomdb.data.table.UserTable
 import app.prgghale.roomdb.utils.UiStates
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class UserViewModel(
@@ -28,6 +29,20 @@ class UserViewModel(
     val users: LiveData<UiStates<List<UserTable>>> = _users
     fun getUsers() = viewModelScope.launch {
         _users.value = UiStates.Loading()
+        delay(900)
         _users.value = userRepository.getUsers()
+    }
+
+    /**
+    Deletes User*/
+    private val _delete = MutableLiveData<UiStates<Boolean>>()
+    val delete: LiveData<UiStates<Boolean>> = _delete
+    fun deleteUser(user: UserTable) = viewModelScope.launch {
+        _delete.value = UiStates.Loading()
+        _delete.value = userRepository.deleteUser(user = user)
+    }
+
+    fun resetDelete() {
+        _delete.value = UiStates.Loading()
     }
 }

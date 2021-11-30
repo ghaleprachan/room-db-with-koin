@@ -13,7 +13,9 @@ enum class BottomNavItems(val label: String, val icons: ImageVector) {
 }
 
 @Composable
-fun BottomBar() {
+fun BottomBar(
+    onItemClick: (type: String) -> Unit = {}
+) {
     var selectedItem by remember { mutableStateOf(0) }
     val items = BottomNavItems.values()
     NavigationBar {
@@ -22,6 +24,7 @@ fun BottomBar() {
                 selected = selectedItem == index,
                 onClick = {
                     selectedItem = index
+                    onItemClick(item.label)
                 },
                 label = { Text(text = item.label) },
                 icon = {

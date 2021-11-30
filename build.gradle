@@ -5,6 +5,7 @@ buildscript {
         kotlinVersion = '1.5.31'
         roomVersion = '2.3.0'
         retrofitVersion = '2.9.0'
+        composeNavigation = '2.4.0-beta02'
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {

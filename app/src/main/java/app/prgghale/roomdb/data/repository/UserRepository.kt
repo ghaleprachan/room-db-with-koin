@@ -10,6 +10,7 @@ import java.lang.Exception
 interface UserRepository {
     suspend fun addUser(user: UserTable): UiStates<Boolean>
     suspend fun getUsers(): UiStates<List<UserTable>>
+    suspend fun deleteUser(user: UserTable): UiStates<Boolean>
 }
 
 class UserRepoImpl(
@@ -30,6 +31,17 @@ class UserRepoImpl(
         return withContext(Dispatchers.IO) {
             try {
                 UiStates.Success(data = usersDao.getUsers())
+            } catch (ex: Exception) {
+                UiStates.Error(message = ex.message)
+            }
+        }
+    }
+
+    override suspend fun deleteUser(user: UserTable): UiStates<Boolean> {
+        return withContext(Dispatchers.IO) {
+            try {
+                usersDao.delete(user)
+                UiStates.Success(true)
             } catch (ex: Exception) {
                 UiStates.Error(message = ex.message)
             }

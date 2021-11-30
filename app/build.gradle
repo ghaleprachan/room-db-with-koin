@@ -57,6 +57,9 @@ dependencies {
     implementation "androidx.compose.animation:animation:$composeVersion"
     implementation "androidx.compose.runtime:runtime-livedata:$composeVersion"
 
+    // Compose Navigation
+    implementation "androidx.navigation:navigation-compose:$composeNavigation"
+
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
     implementation 'androidx.activity:activity-compose:1.4.0'
 

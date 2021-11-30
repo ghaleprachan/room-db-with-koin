@@ -36,7 +36,7 @@ fun HomeScreen(
     val addUserState = userViewModel.addUser.observeAsState()
     val usersState = userViewModel.users.observeAsState()
 
-    AppScaffold(title = "Add Playlist") {
+    AppScaffold(title = "Register Users") {
         HomeScreenContent(
             addUser = { user ->
                 userViewModel.addUser(user = user)
