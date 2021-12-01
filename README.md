@@ -7,4 +7,4 @@ Technologies Used
 5. Room 
 
 
-![alt text](https://raw.githubusercontent.com/ghaleprachan/room-db-with-koin/main/imgs/delete_dialog.jpg)
+![alt text](https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/delete_dialog.jpg?raw=true) ![alt text](https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/home.jpg?raw=true) ![alt text](https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/user_list.jpg?raw=true) 
