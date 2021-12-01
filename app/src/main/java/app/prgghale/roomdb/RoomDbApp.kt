@@ -1,6 +1,7 @@
 package app.prgghale.roomdb
 
 import android.app.Application
+import app.prgghale.roomdb.di.appModule
 import app.prgghale.roomdb.di.dbModule
 import app.prgghale.roomdb.di.repositoryModule
 import app.prgghale.roomdb.di.viewModelModule
@@ -18,6 +19,7 @@ class RoomDbApp : Application() {
                     dbModule,
                     viewModelModule,
                     repositoryModule,
+                    appModule,
                 )
             )
             androidLogger()

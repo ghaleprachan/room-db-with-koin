@@ -18,6 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import app.prgghale.roomdb.composables.BottomBar
 import app.prgghale.roomdb.composables.BottomNavItems
 import app.prgghale.roomdb.theme.RoomDBTheme
+import app.prgghale.roomdb.ui.favorite.FavoriteScreen
 import app.prgghale.roomdb.ui.home.HomeScreen
 import app.prgghale.roomdb.ui.userlist.UsersScreen
 
@@ -68,6 +69,9 @@ class MainActivity : ComponentActivity() {
                                     }
                                     composable(BottomNavItems.Bookings.label) {
                                         UsersScreen()
+                                    }
+                                    composable(BottomNavItems.Favorite.label) {
+                                        FavoriteScreen()
                                     }
                                 }
                             }
