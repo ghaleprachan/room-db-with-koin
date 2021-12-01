@@ -1,10 +1,10 @@
 # room-db-with-koin
 Technologies Used
-1. Dependency Injection (Koin)
+1. Dependency Injection (Koin) (https://insert-koin.io/docs/reference/koin-android/compose/)
 2. Architecture (MVVM) repository pattern
 3. Jetpack Compose (https://developer.android.com/jetpack/compose)
-4. Material YOU (Material Design 3)
-5. Room 
+4. Material YOU (Material Design 3) (https://m3.material.io/components/navigation-bar/implementation/android)
+5. Local Database Room
 
 
 ![alt text](https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/delete_dialog.jpg?raw=true)      ![alt text](https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/home.jpg?raw=true)      ![alt text](https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/user_list.jpg?raw=true) 
