@@ -1,6 +1,7 @@
 package app.prgghale.roomdb.ui.userlist
 
 import androidx.compose.animation.*
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -26,7 +27,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.prgghale.roomdb.composables.AppScaffold
-import app.prgghale.roomdb.composables.ShowAlertDialog
+import app.prgghale.roomdb.composables.ShowDeleteDialog
+import app.prgghale.roomdb.composables.ShowDialog
 import app.prgghale.roomdb.data.domain.UserProfession
 import app.prgghale.roomdb.data.table.UserTable
 import app.prgghale.roomdb.extesion.toastS
@@ -34,6 +36,8 @@ import app.prgghale.roomdb.iconFilled
 import app.prgghale.roomdb.iconOutlined
 import app.prgghale.roomdb.ui.home.UserViewModel
 import app.prgghale.roomdb.utils.UiStates
+import coil.compose.rememberImagePainter
+import coil.transform.CircleCropTransformation
 import org.koin.androidx.compose.getViewModel
 
 @Preview(showSystemUi = true)
@@ -75,7 +79,7 @@ fun UsersScreen(usersViewModel: UserViewModel = getViewModel()) {
     }
 
     if (showAlertState != null)
-        ShowAlertDialog(
+        ShowDeleteDialog(
             onDismiss = { showAlertState = null },
             onDelete = {
                 usersViewModel.deleteUser(user = showAlertState!!)
@@ -132,6 +136,18 @@ private fun UserItem(user: UserProfession, onDelete: (user: UserTable) -> Unit) 
             },
             trailing = {
                 TrailingContent(onDelete = { onDelete(user.user) })
+            },
+            icon = {
+                Image(
+                    painter = rememberImagePainter(
+                        data = "https://ui-avatars.com/api/?name=${user.user.firstName}+${user.user.lastName}",
+                        builder = {
+                            crossfade(true)
+                            transformations(CircleCropTransformation())
+                        }),
+                    contentDescription = "",
+                    modifier = Modifier.size(50.dp)
+                )
             }
         )
         Divider(modifier = Modifier.padding(vertical = 8.dp))
@@ -143,6 +159,12 @@ private fun UserItem(user: UserProfession, onDelete: (user: UserTable) -> Unit) 
 private fun TrailingContent(
     onDelete: () -> Unit
 ) {
+    var dialogState by remember { mutableStateOf(false) }
+    if (dialogState)
+        ShowDialog {
+            dialogState = !dialogState
+        }
+
     var visibleContent by remember { mutableStateOf(false) }
 
     Row {
@@ -152,7 +174,9 @@ private fun TrailingContent(
             exit = scaleOut()
         ) {
             Row {
-                IconButton(onClick = { }) {
+                IconButton(onClick = {
+                    dialogState = !dialogState
+                }) {
                     Icon(iconOutlined.FavoriteBorder, contentDescription = "Favorite Icon")
                 }
 
@@ -170,3 +194,5 @@ private fun TrailingContent(
         }
     }
 }
+
+//https://ui-avatars.com/api/?name=Prachan+Ghale

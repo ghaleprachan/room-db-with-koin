@@ -50,6 +50,7 @@ class UserViewModel(
 
     fun refreshUser() = viewModelScope.launch {
         _userProfession.value = userRepository.getUserProfession()
+        _delete.value = UiStates.Loading()
     }
 
     /**

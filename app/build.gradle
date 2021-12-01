@@ -81,6 +81,9 @@ dependencies {
     kapt "androidx.room:room-compiler:$roomVersion"
     androidTestImplementation "androidx.room:room-testing:$roomVersion"
 
+    // Coil
+    implementation "io.coil-kt:coil-compose:1.4.0"
+
     // GSON
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 

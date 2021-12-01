@@ -9,7 +9,27 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 
 @Composable
-fun ShowAlertDialog(
+fun ShowDialog(
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(text = "Ok")
+            }
+        },
+        title = {
+            Text(text = "Room DB")
+        },
+        text = {
+            Text(text = "Feature not available at the moment.")
+        }
+    )
+}
+
+@Composable
+fun ShowDeleteDialog(
     onDismiss: () -> Unit = {},
     onDelete: () -> Unit = {}
 ) {
