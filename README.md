@@ -5,7 +5,11 @@ Technologies Used
 3. Jetpack Compose (https://developer.android.com/jetpack/compose)
 4. Material YOU (Material Design 3) (https://m3.material.io/components/navigation-bar/implementation/android)
 5. Local Database Room
-6. Livedata and flow
+6. Livedata and Flow
 
+App Features
+1. Adds list of developers
+2. Remove developer or add them to favorite
+3. Search developers
 
 ![alt text](https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/delete_dialog.jpg?raw=true)      ![alt text](https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/home.jpg?raw=true)      ![alt text](https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/user_list.jpg?raw=true) ![alt text](https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/fav_list.jpg?raw=true)  ![alt text](https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/no_data_ui.jpg?raw=true)  ![alt text](https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/search_screen.jpg?raw=true) 
