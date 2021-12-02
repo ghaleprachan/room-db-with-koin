@@ -123,7 +123,8 @@ private fun UsersContent(
     onDelete: (user: UserTable) -> Unit,
     addToFavorite: (user: UserTable) -> Unit
 ) {
-    AppScaffold(title = "Registered Users") {
+    Column {
+
         if (users.isNullOrEmpty()) {
             NoDataLottie()
         } else {
@@ -138,7 +139,7 @@ private fun UsersContent(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun UserItem(
+fun UserItem(
     user: UserProfession,
     onDelete: (user: UserTable) -> Unit,
     addToFavorite: (user: UserTable) -> Unit

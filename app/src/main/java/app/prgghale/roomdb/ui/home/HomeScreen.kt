@@ -58,15 +58,14 @@ fun HomeScreen(
 
     val professions = userViewModel.professions.collectAsState()
 
-    AppScaffold(title = "Register Users") {
-        HomeScreenContent(
-            formState = formState,
-            addUser = { user ->
-                userViewModel.addUser(user = user)
-            },
-            professions = professions.value
-        )
-    }
+
+    HomeScreenContent(
+        formState = formState,
+        addUser = { user ->
+            userViewModel.addUser(user = user)
+        },
+        professions = professions.value
+    )
 
     when (val state = addUserState.value) {
         is UiStates.Loading -> {  /*DO Nothing*/

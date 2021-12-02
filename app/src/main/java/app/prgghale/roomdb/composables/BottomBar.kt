@@ -20,18 +20,21 @@ enum class BottomNavItems(val label: String, val icons: ImageVector) {
     Favorite("Favorite", iconFilled.Star),
 }
 
+enum class Screens(val label: String) {
+    Search("Search")
+}
+
 @Composable
 fun BottomBar(
-    onItemClick: (type: String) -> Unit = {}
+    onItemClick: (type: String) -> Unit = {},
+    currentRoute: String?
 ) {
-    var selectedItem by remember { mutableStateOf(0) }
     val items = BottomNavItems.values()
     NavigationBar {
         items.forEachIndexed { index: Int, item: BottomNavItems ->
             NavigationBarItem(
-                selected = selectedItem == index,
+                selected = currentRoute == items[index].label,
                 onClick = {
-                    selectedItem = index
                     onItemClick(item.label)
                 },
                 label = { Text(text = item.label) },

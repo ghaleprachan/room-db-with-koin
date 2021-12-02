@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import app.prgghale.roomdb.data.domain.UserProfession
 import app.prgghale.roomdb.data.table.UserTable
+import java.util.concurrent.Flow
 
 /**
  * NOTE
@@ -32,4 +33,21 @@ interface UsersDao : BaseDao<UserTable> {
     """
     )
     fun getFavoriteUsers(isFavorite: Boolean = true): List<UserTable>
+
+    @Query(
+        """
+        SELECT * FROM user_table AS ut
+                INNER JOIN profession_table AS pt
+                ON ut.profession = pt.profession_id
+                WHERE firstName LIKE :filter
+    """
+    )
+    suspend fun search(filter: String): List<UserProfession>
+
+    @Query(
+        """
+            SELECT * FROM user_table LIMIT :count OFFSET :offset
+        """
+    )
+    suspend fun paginatedUsers(count: Int, offset: Int): List<UserTable>
 }

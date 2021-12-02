@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun ShowDialog(
+    message: String = "Feature not available at the moment.",
     onDismiss: () -> Unit
 ) {
     AlertDialog(
@@ -23,7 +24,7 @@ fun ShowDialog(
             Text(text = "Room DB")
         },
         text = {
-            Text(text = "Feature not available at the moment.")
+            Text(text = message)
         }
     )
 }

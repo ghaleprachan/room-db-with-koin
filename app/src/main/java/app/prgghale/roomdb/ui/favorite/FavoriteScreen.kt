@@ -64,20 +64,18 @@ fun FavoriteScreen(
 
 @Composable
 private fun FavoriteContent(favUsers: List<UserTable>?) {
-    AppScaffold(title = "Favorite Users") {
-        if (favUsers.isNullOrEmpty()) {
-            NoDataLottie()
-        } else {
-            LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(vertical = 16.dp, horizontal = 24.dp),
-                content = {
-                    items(favUsers.orEmpty()) {
-                        FavoriteItem(user = it)
-                    }
+    if (favUsers.isNullOrEmpty()) {
+        NoDataLottie()
+    } else {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(vertical = 16.dp, horizontal = 24.dp),
+            content = {
+                items(favUsers.orEmpty()) {
+                    FavoriteItem(user = it)
                 }
-            )
-        }
+            }
+        )
     }
 }
 
