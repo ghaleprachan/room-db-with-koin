@@ -26,9 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.prgghale.roomdb.composables.AppScaffold
-import app.prgghale.roomdb.composables.ShowDeleteDialog
-import app.prgghale.roomdb.composables.ShowDialog
+import app.prgghale.roomdb.composables.*
 import app.prgghale.roomdb.data.domain.UserProfession
 import app.prgghale.roomdb.data.table.UserTable
 import app.prgghale.roomdb.extesion.toastS
@@ -43,14 +41,17 @@ import org.koin.androidx.compose.getViewModel
 @Preview(showSystemUi = true)
 @Composable
 private fun UsersPreview() {
-    UsersContent(users = emptyList()) {}
+    UsersContent(users = emptyList(), {}, {})
 }
 
 @Composable
 fun UsersScreen(usersViewModel: UserViewModel = getViewModel()) {
+    val context = LocalContext.current
+
     val usersState = usersViewModel.userProfession.collectAsState()
     val deleteState = usersViewModel.delete.observeAsState()
-    val context = LocalContext.current
+    val updateState = usersViewModel.updateTable.collectAsState()
+
     val getData = remember { mutableStateOf(true) }
     var showAlertState by remember {
         mutableStateOf<UserTable?>(null)
@@ -68,10 +69,14 @@ fun UsersScreen(usersViewModel: UserViewModel = getViewModel()) {
         }
         is UiStates.Success -> {
             UsersContent(
-                users = state.data
-            ) {
-                showAlertState = it
-            }
+                users = state.data,
+                onDelete = {
+                    showAlertState = it
+                },
+                addToFavorite = {
+                    usersViewModel.updateTable(it)
+                }
+            )
         }
         is UiStates.Error -> {
             context.toastS(state.message)
@@ -98,25 +103,46 @@ fun UsersScreen(usersViewModel: UserViewModel = getViewModel()) {
             context.toastS(state.message)
         }
     }
+
+    when (val state = updateState.value) {
+        is UiStates.Loading -> {
+            // DO Nothing
+        }
+        is UiStates.Success -> {
+            usersViewModel.refreshUser()
+        }
+        is UiStates.Error -> {
+            context.toastS(state.message)
+        }
+    }
 }
 
 @Composable
 private fun UsersContent(
     users: List<UserProfession>?,
-    onDelete: (user: UserTable) -> Unit
+    onDelete: (user: UserTable) -> Unit,
+    addToFavorite: (user: UserTable) -> Unit
 ) {
     AppScaffold(title = "Registered Users") {
-        LazyColumn(content = {
-            itemsIndexed(users.orEmpty()) { _, user ->
-                UserItem(user = user, onDelete = onDelete)
-            }
-        })
+        if (users.isNullOrEmpty()) {
+            NoDataLottie()
+        } else {
+            LazyColumn(content = {
+                itemsIndexed(users.orEmpty()) { _, user ->
+                    UserItem(user = user, onDelete = onDelete, addToFavorite = addToFavorite)
+                }
+            })
+        }
     }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun UserItem(user: UserProfession, onDelete: (user: UserTable) -> Unit) {
+private fun UserItem(
+    user: UserProfession,
+    onDelete: (user: UserTable) -> Unit,
+    addToFavorite: (user: UserTable) -> Unit
+) {
     Column {
         ListItem(
             text = {
@@ -135,18 +161,16 @@ private fun UserItem(user: UserProfession, onDelete: (user: UserTable) -> Unit) 
                 Text(text = user.user.displayName())
             },
             trailing = {
-                TrailingContent(onDelete = { onDelete(user.user) })
+                TrailingContent(
+                    isFavorite = user.user.isFavorite,
+                    onDelete = { onDelete(user.user) },
+                    addToFavorite = { addToFavorite(user.user.copy(isFavorite = it)) }
+                )
             },
             icon = {
-                Image(
-                    painter = rememberImagePainter(
-                        data = "https://ui-avatars.com/api/?name=${user.user.firstName}+${user.user.lastName}",
-                        builder = {
-                            crossfade(true)
-                            transformations(CircleCropTransformation())
-                        }),
-                    contentDescription = "",
-                    modifier = Modifier.size(50.dp)
+                UserProfileImg(
+                    firstName = user.user.firstName,
+                    lastName = user.user.lastName
                 )
             }
         )
@@ -157,7 +181,9 @@ private fun UserItem(user: UserProfession, onDelete: (user: UserTable) -> Unit) 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun TrailingContent(
-    onDelete: () -> Unit
+    isFavorite: Boolean,
+    onDelete: () -> Unit,
+    addToFavorite: (Boolean) -> Unit,
 ) {
     var dialogState by remember { mutableStateOf(false) }
     if (dialogState)
@@ -174,10 +200,11 @@ private fun TrailingContent(
             exit = scaleOut()
         ) {
             Row {
-                IconButton(onClick = {
-                    dialogState = !dialogState
-                }) {
-                    Icon(iconOutlined.FavoriteBorder, contentDescription = "Favorite Icon")
+                IconButton(onClick = { addToFavorite(!isFavorite) }) {
+                    Icon(
+                        if (isFavorite) iconFilled.Favorite else iconOutlined.FavoriteBorder,
+                        contentDescription = "Favorite Icon"
+                    )
                 }
 
                 IconButton(onClick = onDelete) {
@@ -194,5 +221,3 @@ private fun TrailingContent(
         }
     }
 }
-
-//https://ui-avatars.com/api/?name=Prachan+Ghale

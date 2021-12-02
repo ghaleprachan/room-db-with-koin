@@ -22,7 +22,8 @@ data class UserTable(
     val firstName: String?,
     val lastName: String?,
     val address: String?,
-    val profession: String?
+    val profession: String?,
+    val isFavorite: Boolean = false
 ) {
     fun displayName(): String = "$firstName $lastName"
 }

@@ -14,10 +14,12 @@ import java.lang.Exception
 
 interface UserRepository {
     suspend fun addUser(user: UserTable): UiStates<Boolean>
+    suspend fun updateUser(user: UserTable): UiStates<Boolean>
     suspend fun getUsers(): UiStates<List<UserTable>>
     suspend fun getUserProfession(): UiStates<List<UserProfession>>
     suspend fun deleteUser(user: UserTable): UiStates<Boolean>
     suspend fun getProfessions(): List<ProfessionTable>
+    suspend fun getFavoriteUsers(): List<UserTable>
 }
 
 class UserRepoImpl(
@@ -28,6 +30,15 @@ class UserRepoImpl(
         return withContext(Dispatchers.IO) {
             handleTryCatch {
                 usersDao.insert(user)
+                UiStates.Success(true)
+            }
+        }
+    }
+
+    override suspend fun updateUser(user: UserTable): UiStates<Boolean> {
+        return withContext(Dispatchers.IO) {
+            handleTryCatch {
+                usersDao.update(user)
                 UiStates.Success(true)
             }
         }
@@ -64,6 +75,17 @@ class UserRepoImpl(
                 professionDao.getAllProfessions()
             } catch (ex: Exception) {
                 Log.e("RoomDbERR", ex.message ?: "Failed to fetch professions")
+                emptyList()
+            }
+        }
+    }
+
+    override suspend fun getFavoriteUsers(): List<UserTable> {
+        return withContext(Dispatchers.IO) {
+            try {
+                usersDao.getFavoriteUsers()
+            } catch (ex: Exception) {
+                Log.e("RoomDbERR", ex.message ?: "Failed get favorite users")
                 emptyList()
             }
         }

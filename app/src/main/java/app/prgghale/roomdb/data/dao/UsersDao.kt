@@ -25,4 +25,11 @@ interface UsersDao : BaseDao<UserTable> {
             """
     )
     fun getUserProfession(): List<UserProfession>
+
+    @Query(
+        """
+        SELECT * FROM user_table WHERE isFavorite=:isFavorite
+    """
+    )
+    fun getFavoriteUsers(isFavorite: Boolean = true): List<UserTable>
 }

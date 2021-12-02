@@ -51,6 +51,7 @@ class UserViewModel(
     fun refreshUser() = viewModelScope.launch {
         _userProfession.value = userRepository.getUserProfession()
         _delete.value = UiStates.Loading()
+        _updateTable.value = UiStates.Loading()
     }
 
     /**
@@ -62,13 +63,27 @@ class UserViewModel(
         _delete.value = userRepository.deleteUser(user = user)
     }
 
-    fun resetDelete() {
-        _delete.value = UiStates.Loading()
-    }
-
+    /**
+     * List of all professions*/
     private val _professions = MutableStateFlow(emptyList<ProfessionTable>())
     val professions: StateFlow<List<ProfessionTable>> = _professions
     fun getProfessions() = viewModelScope.launch {
         _professions.value = userRepository.getProfessions()
+    }
+
+    /**
+     * Update table*/
+    private val _updateTable = MutableStateFlow<UiStates<Boolean>>(UiStates.Loading())
+    val updateTable: StateFlow<UiStates<Boolean>> = _updateTable
+    fun updateTable(user: UserTable) = viewModelScope.launch {
+        _updateTable.value = userRepository.updateUser(user)
+    }
+
+    /**
+     * Get list of favorite users*/
+    private val _favoriteUsers = MutableLiveData<List<UserTable>>()
+    val favoriteUsers: LiveData<List<UserTable>> = _favoriteUsers
+    fun getFavoriteUsers() = viewModelScope.launch {
+        _favoriteUsers.value = userRepository.getFavoriteUsers()
     }
 }
