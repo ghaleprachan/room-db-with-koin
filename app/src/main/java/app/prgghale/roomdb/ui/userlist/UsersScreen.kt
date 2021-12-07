@@ -28,7 +28,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.prgghale.roomdb.composables.*
 import app.prgghale.roomdb.data.domain.UserProfession
+import app.prgghale.roomdb.data.domain.UserProfessionT
 import app.prgghale.roomdb.data.table.UserTable
+import app.prgghale.roomdb.extesion.toJson
 import app.prgghale.roomdb.extesion.toastS
 import app.prgghale.roomdb.iconFilled
 import app.prgghale.roomdb.iconOutlined
@@ -48,6 +50,36 @@ private fun UsersPreview() {
 fun UsersScreen(usersViewModel: UserViewModel = getViewModel()) {
     val context = LocalContext.current
 
+    /*val userProfessions = usersViewModel.userProfessionT.collectAsState(UiStates.Loading())
+
+    when (val state = userProfessions.value) {
+        is UiStates.Success -> {
+            context.toastS(state.data?.user?.get(0)?.displayName().orEmpty())
+        }
+        else -> {
+            context.toastS(state.data?.user.toString())
+        }
+    }*/
+
+    var isFirstTime by remember { mutableStateOf(true) }
+
+    val userProfessions = usersViewModel.userProfessionF.collectAsState()
+    when (val state = userProfessions.value) {
+        is UiStates.Loading -> {// DO Nothing
+        }
+        is UiStates.Success -> {
+            context.toastS(state.data?.user?.get(0)?.displayName())
+        }
+        is UiStates.Error -> {
+            context.toastS("Error ${state.message}")
+        }
+    }
+    if (isFirstTime) {
+        isFirstTime = false
+        usersViewModel.getUserProfessionF()
+    }
+
+
     val usersState = usersViewModel.userProfession.collectAsState()
     val deleteState = usersViewModel.delete.observeAsState()
     val updateState = usersViewModel.updateTable.collectAsState()
@@ -61,7 +93,9 @@ fun UsersScreen(usersViewModel: UserViewModel = getViewModel()) {
         getData.value = false
         usersViewModel.getUserProfession()
     }
-    when (val state = usersState.value) {
+    when (
+        val state = usersState.value
+    ) {
         is UiStates.Loading -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator()
@@ -92,7 +126,9 @@ fun UsersScreen(usersViewModel: UserViewModel = getViewModel()) {
             }
         )
 
-    when (val state = deleteState.value) {
+    when (
+        val state = deleteState.value
+    ) {
         is UiStates.Loading -> {
             // DO Nothing
         }

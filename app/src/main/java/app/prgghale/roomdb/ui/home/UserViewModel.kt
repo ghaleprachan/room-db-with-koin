@@ -5,13 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.prgghale.roomdb.data.domain.UserProfession
+import app.prgghale.roomdb.data.domain.UserProfessionT
 import app.prgghale.roomdb.data.repository.UserRepository
 import app.prgghale.roomdb.data.table.ProfessionTable
 import app.prgghale.roomdb.data.table.UserTable
 import app.prgghale.roomdb.utils.UiStates
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class UserViewModel(
@@ -85,5 +86,30 @@ class UserViewModel(
     val favoriteUsers: LiveData<List<UserTable>> = _favoriteUsers
     fun getFavoriteUsers() = viewModelScope.launch {
         _favoriteUsers.value = userRepository.getFavoriteUsers()
+    }
+
+    /**
+     * NOTE:
+     *
+     * 1. This part is not in used in code
+     * 2. This is sample how to call data from room DB in parallel manner*/
+    private val usersF: Flow<UiStates<List<UserTable>>> = flow {
+        userRepository.getUsers()
+    }
+    private val professionF: Flow<UiStates<List<ProfessionTable>>> = flow {
+        userRepository.getProfessions()
+    }
+
+    // NOTE not working do more research on it
+    val userProfessionT: Flow<UiStates<UserProfessionT>> =
+        usersF.combine(professionF) { user, profession ->
+            UiStates.Success(data = UserProfessionT(user = user.data, profession = profession.data))
+        }.flowOn(context = Dispatchers.IO)
+
+    private val _userProfessionF = MutableStateFlow<UiStates<UserProfessionT>>(UiStates.Loading())
+    val userProfessionF: StateFlow<UiStates<UserProfessionT>> = _userProfessionF
+    fun getUserProfessionF() = viewModelScope.launch {
+        _userProfessionF.value = UiStates.Loading()
+        _userProfessionF.value = userRepository.getUserProfessionF()
     }
 }

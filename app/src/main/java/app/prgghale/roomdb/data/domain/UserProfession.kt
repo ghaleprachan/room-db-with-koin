@@ -10,3 +10,10 @@ data class UserProfession(
     @Embedded
     val profession: ProfessionTable
 )
+
+data class UserProfessionT(
+    @Embedded
+    val user: List<UserTable>? = emptyList(),
+    @Embedded
+    val profession: List<ProfessionTable>? = emptyList()
+)

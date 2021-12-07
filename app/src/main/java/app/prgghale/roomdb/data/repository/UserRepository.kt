@@ -4,12 +4,13 @@ import android.util.Log
 import app.prgghale.roomdb.data.dao.ProfessionDao
 import app.prgghale.roomdb.data.dao.UsersDao
 import app.prgghale.roomdb.data.domain.UserProfession
+import app.prgghale.roomdb.data.domain.UserProfessionT
 import app.prgghale.roomdb.data.table.ProfessionTable
 import app.prgghale.roomdb.data.table.UserTable
 import app.prgghale.roomdb.utils.UiStates
 import app.prgghale.roomdb.utils.handleTryCatch
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
 import java.lang.Exception
 
 interface UserRepository {
@@ -20,14 +21,18 @@ interface UserRepository {
     suspend fun deleteUser(user: UserTable): UiStates<Boolean>
     suspend fun getProfessions(): List<ProfessionTable>
     suspend fun getFavoriteUsers(): List<UserTable>
+
+
+    suspend fun getUserProfessionF(): UiStates<UserProfessionT>
 }
 
 class UserRepoImpl(
     private val usersDao: UsersDao,
-    private val professionDao: ProfessionDao
+    private val professionDao: ProfessionDao,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : UserRepository {
     override suspend fun addUser(user: UserTable): UiStates<Boolean> {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             handleTryCatch {
                 usersDao.insert(user)
                 UiStates.Success(true)
@@ -88,6 +93,20 @@ class UserRepoImpl(
                 Log.e("RoomDbERR", ex.message ?: "Failed get favorite users")
                 emptyList()
             }
+        }
+    }
+
+    /*val calls = listOf(
+                async { usersDao.getUsers() },
+                async { professionDao.getAllProfessions() }
+            )
+            calls.awaitAll()*/
+    override suspend fun getUserProfessionF(): UiStates<UserProfessionT> {
+        return withContext(dispatcher) {
+            val user = async { usersDao.getUsers() }
+            delay(3000)
+            val professions = async { professionDao.getAllProfessions() }
+            UiStates.Success(UserProfessionT(user.await(), professions.await()))
         }
     }
 }
