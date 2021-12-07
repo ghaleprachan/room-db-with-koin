@@ -81,6 +81,7 @@ fun UsersScreen(usersViewModel: UserViewModel = getViewModel()) {
         is UiStates.Error -> {
             context.toastS(state.message)
         }
+        else -> {}
     }
 
     if (showAlertState != null)
@@ -102,6 +103,7 @@ fun UsersScreen(usersViewModel: UserViewModel = getViewModel()) {
         is UiStates.Error -> {
             context.toastS(state.message)
         }
+        else -> {}
     }
 
     when (val state = updateState.value) {

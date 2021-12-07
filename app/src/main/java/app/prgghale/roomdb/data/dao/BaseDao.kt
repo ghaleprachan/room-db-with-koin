@@ -19,7 +19,7 @@ interface BaseDao<T> {
      *
      * [values] is list of data to be inserted into databse*/
     @Insert(onConflict = REPLACE)
-    suspend fun insert(values: List<T>)
+    fun insert(values: List<T>)
 
     /**
      * Updates Table with new data

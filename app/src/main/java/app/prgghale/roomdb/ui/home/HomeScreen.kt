@@ -77,6 +77,7 @@ fun HomeScreen(
         is UiStates.Error -> {
             context.toastS(state.message ?: "Failed to add user")
         }
+        else -> {}
     }
 
     if (onCreate.value) {

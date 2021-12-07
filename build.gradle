@@ -1,8 +1,8 @@
 buildscript {
     ext {
-        composeVersion = '1.1.0-beta03'
+        composeVersion = '1.1.0-beta04'
         koinVersion = '3.1.2'
-        kotlinVersion = '1.5.31'
+        kotlinVersion = '1.6.0'
         roomVersion = '2.3.0'
         retrofitVersion = '2.9.0'
         composeNavigation = '2.4.0-beta02'

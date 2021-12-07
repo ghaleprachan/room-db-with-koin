@@ -42,12 +42,12 @@ interface UsersDao : BaseDao<UserTable> {
                 WHERE firstName LIKE :filter
     """
     )
-    suspend fun search(filter: String): List<UserProfession>
+    fun search(filter: String): List<UserProfession>
 
     @Query(
         """
             SELECT * FROM user_table LIMIT :count OFFSET :offset
         """
     )
-    suspend fun paginatedUsers(count: Int, offset: Int): List<UserTable>
+    fun paginatedUsers(count: Int, offset: Int): List<UserTable>
 }
