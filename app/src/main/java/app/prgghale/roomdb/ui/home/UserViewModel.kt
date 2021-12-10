@@ -107,12 +107,4 @@ class UserViewModel(
             UiStates.Success(data = UserProfessionT(user = user.data, profession = profession.data))
         }.flowOn(context = Dispatchers.IO)
 
-    private val _userProfessionF = MutableStateFlow<UiStates<UserProfessionT>>(UiStates.Loading())
-    val userProfessionF: StateFlow<UiStates<UserProfessionT>> = _userProfessionF
-    fun getUserProfessionF() = viewModelScope.launch {
-        _userProfessionF.value = UiStates.Loading()
-        _userProfessionF.value = userRepository.getUserProfessionF()
-    }
-
-
 }

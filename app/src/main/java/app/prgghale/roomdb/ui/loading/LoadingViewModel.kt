@@ -1,72 +1,60 @@
 package app.prgghale.roomdb.ui.loading
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.prgghale.roomdb.data.domain.UserProfession
-import app.prgghale.roomdb.data.repository.UserRepository
-import app.prgghale.roomdb.data.table.ProfessionTable
-import app.prgghale.roomdb.data.table.UserTable
-import app.prgghale.roomdb.extesion.toJson
+import app.prgghale.roomdb.Action
+import app.prgghale.roomdb.ui.loading.observers.ProfessionObserver
 import app.prgghale.roomdb.ui.loading.observers.UserObserver
-import app.prgghale.roomdb.utils.UiStates
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
+import app.prgghale.roomdb.ui.loading.observers.UserProfessionObserver
+import app.prgghale.roomdb.utils.ObservableLoadingCounter
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.zip
 
 class LoadingViewModel(
-    private val userRepository: UserRepository,
-    userObserver: UserObserver
+    private val userObserver: UserObserver,
+    private val professionObserver: ProfessionObserver,
+    private val userProfessionObserver: UserProfessionObserver,
 ) : ViewModel() {
+
     private val userLoadingState = ObservableLoadingCounter()
     private val professionLoadingState = ObservableLoadingCounter()
     private val userProfLoadingState = ObservableLoadingCounter()
 
-
     init {
-        userObserver.invoke(UserObserver.Params(10))
-        onRefresh()
+        refresh()
     }
 
-    private val professions = flow<List<ProfessionTable>> {
-        userRepository.getProfessionT()
+    fun refresh() {
+        professionObserver.invoke(ProfessionObserver.Params(Action.Fetch))
+        userProfessionObserver.invoke(UserProfessionObserver.Params(Action.Fetch))
+        userObserver.invoke(UserObserver.Params(Action.Fetch))
     }
-    private val userProfessions = flow<List<UserProfession>> {
-        userRepository.getUserProfession()
-    }
-
-    val state: StateFlow<LoadingViewState> =
-        combine(
-            userLoadingState.observable,
-            professionLoadingState.observable,
-            userProfLoadingState.observable,
-            userObserver.flow,
-            professions,
-            userProfessions,
-        ) { userLoad, professionLoad, userProfLoad, users, professions, userProfession ->
-            Log.e("PrachanGhale", users.toJson())
-            LoadingViewState(
-                userRefreshing = userLoad,
-                professionsRefreshing = professionLoad,
-                userProfRefreshing = userProfLoad,
-                user = users,
-                professions = professions,
-                userProfessions = userProfession
-            )
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = LoadingViewState.Empty
+    /*val state = userProfessionObserver.flow.zip(professionObserver.flow) { user, profession ->
+        LoadingViewState(
+            userProfessions = user,
+            professions = profession
         )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(0),
+        initialValue = LoadingViewState.Empty
+    )*/
 
-    private fun onRefresh() {
-        viewModelScope.launch {
-
-        }
-    }
+    val myState = combine(
+        userProfessionObserver.flow,
+        professionObserver.flow,
+        userObserver.flow
+    ) { userProfession, professions, users ->
+        LoadingViewState(
+            user = users,
+            professions = professions,
+            userProfessions = userProfession
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(0),
+        initialValue = LoadingViewState.Empty
+    )
 }
-
-data class UserStateFlow(
-    val loading: Boolean = false,
-    val userData: UiStates<List<ProfessionTable>> = UiStates.None(),
-)
 

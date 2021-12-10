@@ -1,4 +1,4 @@
-package app.prgghale.roomdb.ui.loading
+package app.prgghale.roomdb.utils
 
 import kotlinx.coroutines.flow.*
 import java.util.concurrent.atomic.AtomicInteger

@@ -50,36 +50,6 @@ private fun UsersPreview() {
 fun UsersScreen(usersViewModel: UserViewModel = getViewModel()) {
     val context = LocalContext.current
 
-    /*val userProfessions = usersViewModel.userProfessionT.collectAsState(UiStates.Loading())
-
-    when (val state = userProfessions.value) {
-        is UiStates.Success -> {
-            context.toastS(state.data?.user?.get(0)?.displayName().orEmpty())
-        }
-        else -> {
-            context.toastS(state.data?.user.toString())
-        }
-    }*/
-
-    var isFirstTime by remember { mutableStateOf(true) }
-
-    val userProfessions = usersViewModel.userProfessionF.collectAsState()
-    when (val state = userProfessions.value) {
-        is UiStates.Loading -> {// DO Nothing
-        }
-        is UiStates.Success -> {
-            context.toastS(state.data?.user?.get(0)?.displayName())
-        }
-        is UiStates.Error -> {
-            context.toastS("Error ${state.message}")
-        }
-    }
-    if (isFirstTime) {
-        isFirstTime = false
-        usersViewModel.getUserProfessionF()
-    }
-
-
     val usersState = usersViewModel.userProfession.collectAsState()
     val deleteState = usersViewModel.delete.observeAsState()
     val updateState = usersViewModel.updateTable.collectAsState()
