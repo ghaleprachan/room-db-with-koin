@@ -20,6 +20,7 @@ import app.prgghale.roomdb.composables.Screens
 import app.prgghale.roomdb.theme.RoomDBTheme
 import app.prgghale.roomdb.ui.favorite.FavoriteScreen
 import app.prgghale.roomdb.ui.home.HomeScreen
+import app.prgghale.roomdb.ui.loading.LoadingScreen
 import app.prgghale.roomdb.ui.search.SearchScreen
 import app.prgghale.roomdb.ui.userlist.UsersScreen
 
@@ -101,6 +102,9 @@ class MainActivity : ComponentActivity() {
             }
             composable(Screens.Search.label) {
                 SearchScreen()
+            }
+            composable(BottomNavItems.Loading.label) {
+                LoadingScreen()
             }
         }
     }

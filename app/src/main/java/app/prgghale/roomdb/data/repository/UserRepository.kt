@@ -1,6 +1,7 @@
 package app.prgghale.roomdb.data.repository
 
 import android.util.Log
+import androidx.compose.runtime.collectAsState
 import app.prgghale.roomdb.data.dao.ProfessionDao
 import app.prgghale.roomdb.data.dao.UsersDao
 import app.prgghale.roomdb.data.domain.UserProfession
@@ -11,6 +12,9 @@ import app.prgghale.roomdb.utils.UiStates
 import app.prgghale.roomdb.utils.handleTryCatch
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flow
 import java.lang.Exception
 
 interface UserRepository {
@@ -24,6 +28,10 @@ interface UserRepository {
 
 
     suspend fun getUserProfessionF(): UiStates<UserProfessionT>
+
+    suspend fun getUsersT(): List<UserTable>
+    suspend fun getProfessionT(): Flow<List<ProfessionTable>>
+    suspend fun getUserProfessionT(): Flow<List<UserProfession>>
 }
 
 class UserRepoImpl(
@@ -104,9 +112,44 @@ class UserRepoImpl(
     override suspend fun getUserProfessionF(): UiStates<UserProfessionT> {
         return withContext(dispatcher) {
             val user = async { usersDao.getUsers() }
+            val userResponse = user.await()
+            Log.e("PrachanGhale", "Above User")
             delay(3000)
+            Log.e("PrachanGhale", "Below User")
             val professions = async { professionDao.getAllProfessions() }
-            UiStates.Success(UserProfessionT(user.await(), professions.await()))
+            UiStates.Success(UserProfessionT(userResponse, professions.await()))
         }
     }
+
+    /**
+     * [distinctUntilChanged()] is a filtering operator,
+     * emitting a subset of elements from the upstream flow.
+     * In this case, the filtering rule is "eliminate consecutive
+     * duplicates". So, in this case, the 1, 1, 1 portion of our
+     * flow will result in a single 1 being emitted downstream,
+     * as the duplicates are ignored.
+     * */
+    override suspend fun getUsersT(): List<UserTable> {
+        return try {
+            Log.e("PrachanGhale", "Here finally")
+            usersDao.getUsers()
+        } catch (e: Exception) {
+            Log.e("PrachanGhale", "${e.message}")
+            emptyList()
+        }
+    }
+
+    override suspend fun getProfessionT() = flow<List<ProfessionTable>> {
+        professionDao.getAllProfessions()
+    }.catch { emptyList<ProfessionTable>() }
+        .distinctUntilChanged()
+
+
+    override suspend fun getUserProfessionT() = flow<List<UserProfession>> {
+        try {
+            usersDao.getUserProfession()
+        } catch (ex: Exception) {
+            emptyList()
+        }
+    }.distinctUntilChanged()
 }

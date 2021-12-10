@@ -8,4 +8,6 @@ sealed class UiStates<T>(
     class Success<T>(data: T?) : UiStates<T>(data = data, isLoading = false)
     class Error<T>(message: String?) : UiStates<T>(message = message, isLoading = false)
     class Loading<T>(isLoading: Boolean = true) : UiStates<T>(isLoading = isLoading)
+
+    class None<T>() : UiStates<T>()
 }

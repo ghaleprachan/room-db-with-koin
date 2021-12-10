@@ -22,20 +22,9 @@ import app.prgghale.roomdb.composables.ShowDialog
 import app.prgghale.roomdb.data.domain.UserProfession
 import app.prgghale.roomdb.data.table.ProfessionTable
 import app.prgghale.roomdb.extesion.Height
+import app.prgghale.roomdb.ui.loading.rememberFlowWithLifecycle
 import app.prgghale.roomdb.ui.userlist.UserItem
 import org.koin.androidx.compose.getViewModel
-
-@Composable
-fun <T> rememberFlowWithLifecycle(
-    flow: kotlinx.coroutines.flow.Flow<T>,
-    lifecycle: Lifecycle = LocalLifecycleOwner.current.lifecycle,
-    minActiveState: Lifecycle.State = Lifecycle.State.STARTED
-): kotlinx.coroutines.flow.Flow<T> = remember(flow, lifecycle) {
-    flow.flowWithLifecycle(
-        lifecycle = lifecycle,
-        minActiveState = minActiveState
-    )
-}
 
 @Composable
 fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {

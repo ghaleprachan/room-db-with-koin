@@ -11,6 +11,7 @@ import app.prgghale.roomdb.data.table.ProfessionTable
 import app.prgghale.roomdb.data.table.UserTable
 import app.prgghale.roomdb.utils.UiStates
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -112,4 +113,6 @@ class UserViewModel(
         _userProfessionF.value = UiStates.Loading()
         _userProfessionF.value = userRepository.getUserProfessionF()
     }
+
+
 }

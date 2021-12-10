@@ -1,23 +1,19 @@
 package app.prgghale.roomdb.composables
 
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Downloading
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
-import androidx.compose.material3.DrawerDefaults.Elevation
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import app.prgghale.roomdb.iconFilled
 
 enum class BottomNavItems(val label: String, val icons: ImageVector) {
     Home("Add User", iconFilled.Add),
     Bookings("Users List", iconFilled.AccountBox),
     Favorite("Favorite", iconFilled.Star),
+    Loading("Loading", iconFilled.Downloading),
 }
 
 enum class Screens(val label: String) {
