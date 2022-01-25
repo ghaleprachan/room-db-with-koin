@@ -13,9 +13,12 @@ jobs:
         with:
           java-version: 1.8
 
+#      - name: Generate Gradle Wapper
+#        run: /gradleW wrapper
+
       - name: Run Tests
-        run: ./gradleW test
+        run: /gradleW test
 
       - name: Build Project
-        run: ./gradleW assemble
+        run: /gradleW assemble
 
