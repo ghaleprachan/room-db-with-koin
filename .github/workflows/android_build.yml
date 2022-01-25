@@ -23,6 +23,6 @@ jobs:
 #      - name: Run Tests
 #        run: ./gradleW test
 
-      - name: Build Project
-        run: ./gradleW assemble
+#      - name: Build Project
+#        run: ./gradleW assemble
 
