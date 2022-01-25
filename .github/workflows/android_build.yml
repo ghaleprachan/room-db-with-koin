@@ -13,8 +13,11 @@ jobs:
         with:
           java-version: 1.8
 
-#      - name: Generate Gradle Wapper
-#        run: /gradleW wrapper
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+            - name: Build with Gradle
+              run: ./gradlew build
 
       - name: Run Tests
         run: /gradleW test
