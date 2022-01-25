@@ -9,6 +9,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -18,16 +19,16 @@ import app.prgghale.roomdb.utils.UiStates
 
 @Composable
 fun LoadingScreen(loadingViewModel: LoadingViewModel) {
-    /*val viewState by rememberFlowWithLifecycle(flow = loadingViewModel.myState)
-        .collectAsState(initial = LoadingViewState.Empty)*/
-    val viewState = loadingViewModel.myState.collectAsState()
+    val viewState by rememberFlowWithLifecycle(flow = loadingViewModel.myState)
+        .collectAsState(initial = LoadingViewState.Empty)
+    // val viewState = loadingViewModel.myState.collectAsState()
 
-    LoadingContent(
+    /*LoadingContent(
         viewState = viewState,
         refresh = {
             loadingViewModel.refresh()
         }
-    )
+    )*/
 }
 
 @Composable
