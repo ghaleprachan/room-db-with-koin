@@ -16,12 +16,13 @@ jobs:
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
-            - name: Build with Gradle
-              run: ./gradlew build
 
-      - name: Run Tests
-        run: /gradleW test
+#      - name: Build with Gradle
+#        run: ./gradlew build
 
-      - name: Build Project
-        run: /gradleW assemble
+#      - name: Run Tests
+#        run: ./gradleW test
+
+#      - name: Build Project
+#        run: ./gradleW assemble
 
