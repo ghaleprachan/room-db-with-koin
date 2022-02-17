@@ -1,4 +1,4 @@
-# Technologies Used
+# Libraries, Tools & Technologies Used
 
 - [Dependency Injection (Koin)](https://insert-koin.io/docs/reference/koin-android/compose/)
 - Architecture (MVVM) repository pattern
