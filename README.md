@@ -4,9 +4,9 @@
 - Architecture (MVVM) repository pattern
 - [Jetpack Compose](https://developer.android.com/jetpack/compose)
 - [Material YOU (Material Design 3)](https://m3.material.io/components/navigation-bar/implementation/android)
-- Local Database Room
+- [Local Database Using Room](https://developer.android.com/training/data-storage/room)
 - Livedata and Flow
-- [Coroutines (Best practices for coroutines)](https://developer.android.com/kotlin/coroutines/coroutines-best-practices)
+- [Kotlin Coroutines (Best practices for coroutines)](https://developer.android.com/kotlin/coroutines/coroutines-best-practices)
 
 # App Features
 
