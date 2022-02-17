@@ -1,5 +1,6 @@
 # Room Sample Project
-Technologies Used
+---
+# Technologies Used
 1. Dependency Injection (Koin) (https://insert-koin.io/docs/reference/koin-android/compose/)
 2. Architecture (MVVM) repository pattern
 3. Jetpack Compose (https://developer.android.com/jetpack/compose)
@@ -8,7 +9,7 @@ Technologies Used
 6. Livedata and Flow
 7. Coroutines (Best practices for coroutines https://developer.android.com/kotlin/coroutines/coroutines-best-practices)
 
-App Features
+# App Features
 1. Adds list of developers
 2. Remove developer or add them to favorite
 3. Search developers
