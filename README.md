@@ -5,7 +5,7 @@
 - [Jetpack Compose](https://developer.android.com/jetpack/compose)
 - [Material Design 3 (Material You)](https://m3.material.io/components/navigation-bar/implementation/android)
 - [Local Database Using Room](https://developer.android.com/training/data-storage/room)
-- Livedata and Flow
+- [Livedata](https://developer.android.com/topic/libraries/architecture/livedata) and [Flow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/)
 - [Kotlin Coroutines (Best practices for coroutines)](https://developer.android.com/kotlin/coroutines/coroutines-best-practices)
 
 # App Features
