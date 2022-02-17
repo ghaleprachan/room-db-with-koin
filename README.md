@@ -6,7 +6,7 @@
 4. [Material YOU (Material Design 3)](https://m3.material.io/components/navigation-bar/implementation/android)
 5. Local Database Room
 6. Livedata and Flow
-7. [Coroutines](Best practices for coroutines https://developer.android.com/kotlin/coroutines/coroutines-best-practices)
+7. [Coroutines (Best practices for coroutines)](https://developer.android.com/kotlin/coroutines/coroutines-best-practices)
 
 # App Features
 
