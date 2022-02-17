@@ -1,5 +1,3 @@
-# Room Sample Project
-
 # Technologies Used
 
 1. Dependency Injection (Koin) (https://insert-koin.io/docs/reference/koin-android/compose/)
