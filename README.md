@@ -22,4 +22,3 @@ App Features
 <img src="https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/search_screen.jpg?raw=true" width="240" height="auto">
 </p>
 
-![alt text](https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/delete_dialog.jpg?raw=true)      ![alt text](https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/home.jpg?raw=true)      ![alt text](https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/user_list.jpg?raw=true) ![alt text](https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/fav_list.jpg?raw=true)  ![alt text](https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/no_data_ui.jpg?raw=true)  ![alt text](https://github.com/ghaleprachan/room-db-with-koin/blob/main/imgs/search_screen.jpg?raw=true) 
