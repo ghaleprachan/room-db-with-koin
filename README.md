@@ -1,7 +1,7 @@
 # Libraries, Tools & Technologies Used
 
 - [Dependency Injection (Koin)](https://insert-koin.io/docs/reference/koin-android/compose/)
-- Architecture (MVVM) repository pattern
+- Architecture (MVVM) repository pattern. [Repository pattern codelab](https://developer.android.com/codelabs/basic-android-kotlin-training-repository-pattern#0)
 - [Jetpack Compose](https://developer.android.com/jetpack/compose)
 - [Material Design 3 (Material You)](https://m3.material.io/components/navigation-bar/implementation/android)
 - [Local Database Using Room](https://developer.android.com/training/data-storage/room)
