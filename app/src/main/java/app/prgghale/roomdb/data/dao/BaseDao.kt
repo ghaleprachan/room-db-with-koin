@@ -2,7 +2,7 @@ package app.prgghale.roomdb.data.dao
 
 import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy.REPLACE
+import androidx.room.*
 import androidx.room.Update
 
 /**
@@ -11,21 +11,21 @@ interface BaseDao<T> {
 
     /**
      * Insert single value on database*/
-    @Insert(onConflict = REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(value: T)
 
     /**
      * Insert list of data into database
      *
      * [values] is list of data to be inserted into databse*/
-    @Insert(onConflict = REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(values: List<T>)
 
     /**
      * Updates Table with new data
      *
      * [value] is updated data*/
-    @Update(onConflict = REPLACE)
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(value: T)
 
     /**

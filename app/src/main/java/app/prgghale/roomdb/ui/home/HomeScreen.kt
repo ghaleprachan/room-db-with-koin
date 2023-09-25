@@ -11,13 +11,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -27,7 +25,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.prgghale.roomdb.composables.AppScaffold
 import app.prgghale.roomdb.composables.CustomTextField
 import app.prgghale.roomdb.data.table.ProfessionTable
 import app.prgghale.roomdb.data.table.UserTable
@@ -42,7 +39,6 @@ fun HomePreView() {
     HomeScreen()
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun HomeScreen(
     userViewModel: UserViewModel = getViewModel()
@@ -86,7 +82,6 @@ fun HomeScreen(
 }
 
 // FIXME change way of using professions on ui
-@OptIn(ExperimentalMaterial3Api::class, androidx.compose.material.ExperimentalMaterialApi::class)
 @Composable
 private fun HomeScreenContent(
     addUser: (user: UserTable) -> Unit,
