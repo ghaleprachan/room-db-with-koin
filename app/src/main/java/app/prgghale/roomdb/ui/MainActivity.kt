@@ -31,7 +31,6 @@ class MainActivity : ComponentActivity() {
     private val loadingViewmodel by viewModel<LoadingViewModel>()
 
 
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

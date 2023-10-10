@@ -93,7 +93,7 @@ private fun HomeScreenContent(
 
     Column(
         modifier = Modifier
-            .padding(horizontal = 24.dp, vertical = 16.dp)
+            .padding(horizontal = 24.dp, vertical = 55.dp)
             .verticalScroll(rememberScrollState()),
     ) {
         CustomTextField(value = formState.firstName, label = "Enter first name")
