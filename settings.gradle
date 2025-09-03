@@ -1,16 +1,108 @@
 pluginManagement {
     repositories {
         gradlePluginPortal()
-        google()
+        maven { url "https://plugins.gradle.org/m2/" }
         mavenCentral()
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+            name "SonatypeSnapshots"
+            mavenContent {
+                snapshotsOnly()
+            }
+        }
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin/" }
+        maven { url "https://maven.aliyun.com/repository/jcenter" }
+        maven { url "https://maven.aliyun.com/repository/public/" }
+        maven { url "https://maven.aliyun.com/repository/google/" }
+        maven { url "https://maven.aliyun.com/repository/grails-core/" }
+        maven { url "https://maven.aliyun.com/repository/apache-snapshots/" }
+        maven { url "https://maven.aliyun.com/repository/spring-plugin/" }
+
+        maven { url "https://developer.huawei.com/repo/" }
+        maven { url "https://maven.pkg.jetbrains.space/public/p/compose/dev" }
+
+        maven { url 'https://api.xposed.info/' }
+
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://www.dfki.uni-kl.de/artifactory/libs-releases/' }
+        maven { url 'https://s3.amazonaws.com/repo.commonsware.com' }
+        maven { url 'https://jogamp.org/deployment/maven' }
+        maven { url 'https://raw.githubusercontent.com/cybernhl/maven-repository/master/' }
+    }
+    plugins {
+
     }
 }
+
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
+
+String fullVersion = System.getProperty("java.version", "8.0.0")
+List<Integer> versionComponents = fullVersion
+        .split('\\.')
+        .take(2)
+        .findAll { it.length() > 0 }
+        .collect { Integer.parseInt(it) }
+
+int currentJdk
+if (versionComponents.size() >= 2) {
+    if (versionComponents[0] == 1) {
+        currentJdk = versionComponents[1]
+    } else {
+        currentJdk = versionComponents[0]
+    }
+} else if (versionComponents.size() == 1) {
+    currentJdk = versionComponents[0]
+} else {
+    println "Warning: Could not determine current JDK version from '${fullVersion}'. Defaulting to 8."
+    currentJdk = 8
+}
+println "Current JDK Major Version: ${currentJdk}"
+
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        google()
         mavenCentral()
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+            name "SonatypeSnapshots"
+            mavenContent {
+                snapshotsOnly()
+            }
+        }
+        maven { url "https://maven.aliyun.com/repository/jcenter" }
+        maven { url "https://maven.aliyun.com/repository/public/" }
+        maven { url "https://maven.aliyun.com/repository/google/" }
+        maven { url "https://maven.aliyun.com/repository/grails-core/" }
+        maven { url "https://maven.aliyun.com/repository/apache-snapshots/" }
+        maven { url "https://maven.aliyun.com/repository/spring-plugin/" }
+
+        maven { url "https://developer.huawei.com/repo/" }
+        maven { url "https://maven.pkg.jetbrains.space/public/p/compose/dev" }
+
+        maven { url 'https://api.xposed.info/' }
+
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://www.dfki.uni-kl.de/artifactory/libs-releases/' }
+        maven { url 'https://s3.amazonaws.com/repo.commonsware.com' }
+        maven { url 'https://jogamp.org/deployment/maven' }
+        maven { url 'https://raw.githubusercontent.com/cybernhl/maven-repository/master/' }
     }
 }
+
 rootProject.name = "Room DB"
 include ':app'
