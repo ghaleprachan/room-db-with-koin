@@ -10,5 +10,5 @@ import org.koin.dsl.module
  * */
 val appModule = module {
     single { Dispatchers.Default }
-    single { CoroutineScope(Dispatchers.Main + Job()) }
+    single { CoroutineScope(Dispatchers.IO + Job()) }//FIXME Cannot access database on the main thread since it may potentially lock the UI for a long period of time.
 }
