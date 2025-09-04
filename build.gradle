@@ -2,8 +2,8 @@ buildscript {
     ext {
         composeVersion = '1.1.0-beta04'
         koinVersion = '3.1.2'
-        kotlinVersion = '1.6.0'
-        roomVersion = '2.3.0'
+        kotlinVersion = '1.6.10'// FIXME kotlin version relation kapt & compose compiler version  &  JVM version  if over 1.7.x only support JVM 17
+        roomVersion = '2.4.3'
         retrofitVersion = '2.9.0'
         composeNavigation = '2.4.0-beta02'
     }

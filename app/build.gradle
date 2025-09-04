@@ -38,8 +38,9 @@ android {
         freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
 
+    //Ref : https://developer.android.com/jetpack/androidx/releases/compose-kotlin#groovy
     composeOptions {
-        kotlinCompilerExtensionVersion composeVersion
+        kotlinCompilerExtensionVersion = "1.1.1"
     }
     packagingOptions {
         resources {
