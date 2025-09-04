@@ -225,7 +225,7 @@ private fun TrailingContent(
 
         IconButton(onClick = { visibleContent = !visibleContent }) {
             Icon(
-                if (visibleContent) iconFilled.ArrowForwardIos else iconFilled.ArrowBackIos,
+                if (visibleContent) iconFilled.ArrowForward else iconFilled.ArrowBack,
                 contentDescription = null
             )
         }

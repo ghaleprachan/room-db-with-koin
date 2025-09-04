@@ -1,5 +1,6 @@
 package app.prgghale.roomdb.composables
 
+import androidx.compose.animation.core.DecayAnimationSpec
 import androidx.compose.animation.core.animateDecay
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.rememberSplineBasedDecay
@@ -22,10 +23,12 @@ fun AppScaffold(
     onSearch: () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit
 ) {
-    val decayAnimationSpec = rememberSplineBasedDecay<Float>()
-    val scrollBehavior = remember(decayAnimationSpec) {
-        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(decayAnimationSpec)
-    }
+    val topAppBarState: TopAppBarState = rememberTopAppBarState()
+    val decayAnimationSpec: DecayAnimationSpec<Float> = rememberSplineBasedDecay<Float>()
+    val scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
+        state = topAppBarState,
+        flingAnimationSpec = decayAnimationSpec
+    )
     Scaffold(
         modifier = modifier,
         topBar = {

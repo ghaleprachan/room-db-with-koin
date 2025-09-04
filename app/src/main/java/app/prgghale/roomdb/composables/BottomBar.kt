@@ -10,7 +10,7 @@ enum class BottomNavItems(val label: String, val icons: ImageVector) {
     Home("Add User", iconFilled.Add),
     Bookings("Users List", iconFilled.AccountBox),
     Favorite("Favorite", iconFilled.Star),
-    Loading("Loading", iconFilled.Downloading),
+    Loading("Loading", iconFilled.Email),
     Profile("Profile", iconFilled.Person),
 }
 
