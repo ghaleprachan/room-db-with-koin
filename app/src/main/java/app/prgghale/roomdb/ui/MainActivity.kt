@@ -3,6 +3,7 @@ package app.prgghale.roomdb.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
@@ -26,7 +27,6 @@ import app.prgghale.roomdb.ui.profile.ProfileScreen
 import app.prgghale.roomdb.ui.search.SearchScreen
 import app.prgghale.roomdb.ui.userlist.UsersScreen
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
 class MainActivity : ComponentActivity() {
     private val loadingViewmodel by viewModel<LoadingViewModel>()
 
@@ -45,6 +45,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    // Outer Scaffold mainly for BottomBar
                     Scaffold(
                         bottomBar = {
                             BottomBar(
@@ -55,9 +56,10 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         },
-                        content = { innerPadding ->
+                        content = { outerScaffoldPadding -> // Padding from the outer Scaffold (for BottomBar)
+                            // AppScaffold for TopAppBar and main screen content area
                             AppScaffold(
-                                modifier = Modifier.padding(innerPadding),
+                                modifier = Modifier.padding(outerScaffoldPadding), // Apply outer padding to AppScaffold
                                 title = title,
                                 onSearch = {
                                     title = Screens.Search.label
@@ -66,8 +68,13 @@ class MainActivity : ComponentActivity() {
                                         Screens.Search.label
                                     )
                                 }
-                            ) {
-                                MainContent(navController)
+                            ) { appScaffoldContentPadding -> // Padding from AppScaffold (for TopAppBar)
+                                // MainContent hosts the NavHost and applies AppScaffold's padding
+                                MainContent(
+                                    navController = navController,
+                                    // Pass the padding from AppScaffold to NavHost container
+                                    contentPaddingForNavHost = appScaffoldContentPadding
+                                )
                             }
                         }
                     )
@@ -92,16 +99,23 @@ class MainActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun MainContent(navController: NavHostController) {
+    private fun MainContent(
+        navController: NavHostController,
+        contentPaddingForNavHost: PaddingValues // Renamed for clarity
+    ) {
         NavHost(
             navController = navController,
-            startDestination = BottomNavItems.Home.label
+            startDestination = BottomNavItems.Home.label,
+            // The NavHost itself is padded to respect the AppScaffold's TopAppBar
+            modifier = Modifier.padding(contentPaddingForNavHost)
         ) {
             composable(route = BottomNavItems.Home.label) {
-                HomeScreen()
+                // HomeScreen should not need additional padding from AppScaffold,
+                // as NavHost's modifier already handles it.
+                HomeScreen() // No padding passed from here
             }
             composable(BottomNavItems.Bookings.label) {
-                UsersScreen()
+                UsersScreen() // Assuming other screens also don't need explicit scaffold padding
             }
             composable(BottomNavItems.Favorite.label) {
                 FavoriteScreen()
