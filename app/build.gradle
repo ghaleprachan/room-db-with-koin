@@ -1,6 +1,8 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    //Ref : https://developer.android.com/jetpack/androidx/releases/compose-kotlin#groovy
+    alias(libs.plugins.compose.compiler)
     id 'kotlin-kapt'
 }
 
@@ -38,10 +40,6 @@ android {
         freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
 
-    //Ref : https://developer.android.com/jetpack/androidx/releases/compose-kotlin#groovy
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.1"
-    }
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'

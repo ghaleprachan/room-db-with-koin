@@ -122,6 +122,7 @@ fun UsersScreen(usersViewModel: UserViewModel = getViewModel()) {
         is UiStates.Error -> {
             context.toastS(state.message)
         }
+        else -> {}
     }
 }
 

@@ -42,16 +42,17 @@ abstract class AppDatabase : RoomDatabase() {
                         super.onCreate(db)
                         INSTANCE?.let { database ->
                             scope.launch {
+                                val list=listOf(
+                                    ProfessionTable(professionName = "Ui/Ux Designer"),
+                                    ProfessionTable(professionName = "Android Developer"),
+                                    ProfessionTable(professionName = "Node Developer"),
+                                    ProfessionTable(professionName = "React Developer"),
+                                    ProfessionTable(professionName = "Laravel Developer"),
+                                    ProfessionTable(professionName = "Django Developer"),
+                                    ProfessionTable(professionName = "QA Engineer")
+                                )
                                 try {
-                                    database.getProfessionDao().insert(listOf(
-                                        ProfessionTable(professionName = "Ui/Ux Designer"),
-                                        ProfessionTable(professionName = "Android Developer"),
-                                        ProfessionTable(professionName = "Node Developer"),
-                                        ProfessionTable(professionName = "React Developer"),
-                                        ProfessionTable(professionName = "Laravel Developer"),
-                                        ProfessionTable(professionName = "Django Developer"),
-                                        ProfessionTable(professionName = "QA Engineer")
-                                    ))
+                                    database.getProfessionDao().insert(list)
                                 }catch (e: Exception) {
                                     Log.e("AppDatabaseCallback", "Error populating professions: ${e.message}", e)
                                 }
