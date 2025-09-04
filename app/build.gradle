@@ -99,6 +99,7 @@ dependencies {
     // Room components
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.sqlite.bundled)
     ksp(libs.androidx.room.compiler)
 
     // Coil
