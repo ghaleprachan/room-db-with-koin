@@ -1,6 +1,7 @@
 package app.prgghale.roomdb.data.database
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -11,6 +12,8 @@ import app.prgghale.roomdb.data.dao.UsersDao
 import app.prgghale.roomdb.data.table.ProfessionTable
 import app.prgghale.roomdb.data.table.UserTable
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 private val DbName = "RoomDbName"
 @Database(
@@ -25,13 +28,13 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
-        fun getInstance(context: Context, scope: CoroutineScope): AppDatabase {
+        private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+        fun getInstance(context: Context,): AppDatabase {
             // Classic double-checked locking
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: buildDatabase(context.applicationContext, scope).also { INSTANCE = it }
             }
         }
-
         private fun buildDatabase(appContext: Context, scope: CoroutineScope): AppDatabase {
             return Room.databaseBuilder(appContext, AppDatabase::class.java, DbName)
                 .addCallback(object : RoomDatabase.Callback() {
@@ -39,15 +42,19 @@ abstract class AppDatabase : RoomDatabase() {
                         super.onCreate(db)
                         INSTANCE?.let { database ->
                             scope.launch {
-                                database.getProfessionDao().insert(listOf(
-                                    ProfessionTable(professionName = "Ui/Ux Designer"),
-                                    ProfessionTable(professionName = "Android Developer"),
-                                    ProfessionTable(professionName = "Node Developer"),
-                                    ProfessionTable(professionName = "React Developer"),
-                                    ProfessionTable(professionName = "Laravel Developer"),
-                                    ProfessionTable(professionName = "Django Developer"),
-                                    ProfessionTable(professionName = "QA Engineer")
-                                ))
+                                try {
+                                    database.getProfessionDao().insert(listOf(
+                                        ProfessionTable(professionName = "Ui/Ux Designer"),
+                                        ProfessionTable(professionName = "Android Developer"),
+                                        ProfessionTable(professionName = "Node Developer"),
+                                        ProfessionTable(professionName = "React Developer"),
+                                        ProfessionTable(professionName = "Laravel Developer"),
+                                        ProfessionTable(professionName = "Django Developer"),
+                                        ProfessionTable(professionName = "QA Engineer")
+                                    ))
+                                }catch (e: Exception) {
+                                    Log.e("AppDatabaseCallback", "Error populating professions: ${e.message}", e)
+                                }
                             }
                         }
                     }
