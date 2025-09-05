@@ -7,6 +7,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
+import androidx.sqlite.SQLiteConnection
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import app.prgghale.roomdb.data.dao.ProfessionDao
@@ -36,10 +37,11 @@ abstract class AppDatabase : RoomDatabase() {
         fun getInstance(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: getDatabaseBuilder(context)
+                    .setDriver(BundledSQLiteDriver())//TODO KMP Callback is SQLiteConnection  Android is SupportSQLiteDatabase
                     .addCallback(object : RoomDatabase.Callback(){
-                        override fun onCreate(db: SupportSQLiteDatabase) {
-                            super.onCreate(db)
-                            Log.d("AppDatabase", "Room.Callback.onCreate: Database structure created. DB: $db")
+                        override fun onCreate(connection: SQLiteConnection) {
+                            super.onCreate(connection)
+                            Log.i("AppDatabase", "Room.Callback.onCreate: Database structure created. connection: $connection")
                             INSTANCE?.let { database ->
                                 scope.launch {
                                     val list=listOf(
@@ -60,13 +62,12 @@ abstract class AppDatabase : RoomDatabase() {
                             }
                         }
 
-                        override fun onOpen(db: SupportSQLiteDatabase) {
-                            super.onOpen(db)
-                            Log.d("AppDatabase", "Room.Callback.onOpen: Database opened. DB: $db")
+                        override fun onOpen(connection: SQLiteConnection) {
+                            super.onOpen(connection)
+                            Log.d("AppDatabase", "Room.Callback.onOpen: Database opened. connection: $connection")
                         }
                     })
                     .fallbackToDestructiveMigrationOnDowngrade(true)
-//                    .setDriver(BundledSQLiteDriver())//TODO  KMP use setDriver can not Callback
                     .setQueryCoroutineContext(Dispatchers.IO)
                     .addMigrations(MIGRATION_1_2)
                     .fallbackToDestructiveMigration()
