@@ -2,7 +2,8 @@ package app.prgghale.roomdb
 
 import android.app.Application
 import app.prgghale.roomdb.di.appModule
-import app.prgghale.roomdb.di.dbModule
+import app.prgghale.roomdb.di.commonDbModule
+import app.prgghale.roomdb.di.platformDBModule
 import app.prgghale.roomdb.di.repositoryModule
 import app.prgghale.roomdb.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -16,7 +17,8 @@ class RoomDbApp : Application() {
             androidContext(this@RoomDbApp)
             modules(
                 listOf(
-                    dbModule,
+                    commonDbModule,
+                    platformDBModule,
                     viewModelModule,
                     repositoryModule,
                     appModule,
