@@ -1,5 +1,3 @@
-import org.gradle.kotlin.dsl.invoke
-import org.gradle.kotlin.dsl.lint
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -138,6 +136,8 @@ kotlin {
         all {
             languageSettings {
                 optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
+                optIn("androidx.compose.material3.ExperimentalMaterial3Api")
+                optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
             }
         }
         commonMain {
@@ -150,11 +150,8 @@ kotlin {
                 implementation(libs.androidx.room.runtime)
                 implementation(libs.androidx.paging.common)
                 implementation(libs.sqlite.bundled)
-
-                implementation(libs.kotlinx.atomicfu)
-
-//                implementation(libs.koin.core)
                 //TODO ksp can not add here
+                implementation(libs.kotlinx.atomicfu)
                 implementation("com.benasher44:uuid:0.8.2")
             }
         }
@@ -198,7 +195,6 @@ kotlin {
 }
 
 dependencies {
-//    ksp(libs.koin.ksp.compiler)
     ksp(libs.androidx.room.compiler)
 }
 

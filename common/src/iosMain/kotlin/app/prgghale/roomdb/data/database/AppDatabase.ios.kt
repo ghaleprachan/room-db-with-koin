@@ -26,10 +26,3 @@ private fun documentDirectory(): String {
     )
     return requireNotNull(documentDirectory?.path)
 }
-
-//actual object AppDatabaseConstructor :
-//    RoomDatabaseConstructor<AppDatabase> {
-//    actual override fun initialize(): AppDatabase {
-//        TODO("Not yet implemented")
-//    }
-//}
