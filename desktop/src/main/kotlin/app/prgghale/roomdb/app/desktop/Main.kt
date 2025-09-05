@@ -14,7 +14,7 @@ fun main(args: Array<String>) {
     application {
         initKoin()
         Window(
-            title = "SimpleNews",
+            title = "RoomDB",
             onCloseRequest = {
                 exitApplication()
             },
