@@ -4,15 +4,17 @@ import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Divider
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ListItem
+
+
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -139,7 +141,6 @@ private fun UsersContent(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun UserItem(
     user: UserProfession,
@@ -148,40 +149,51 @@ fun UserItem(
 ) {
     Column {
         ListItem(
-            text = {
-                Text(
-                    text = user.profession.professionName.orEmpty(),
-                    style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
-                )
+            headlineContent = { // <--- 修改點：M2 的 text 和 overlineText 放入這裡
+                Column { // 使用 Column 垂直排列 overlineText 和 text
+                    Text(
+                        text = user.user.displayName(),
+                        // style = MaterialTheme.typography.labelSmall // M3 中 overline 的建議樣式
+                        // 您也可以保持您原來的樣式，但可以考慮 M3 的排版系統
+                        style = TextStyle(fontSize = 12.sp, color = Color.Gray) // 示例 overline 樣式
+                    )
+                    Text(
+                        text = user.profession.professionName.orEmpty(),
+                        style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+                    )
+                }
             },
-            secondaryText = {
+            supportingContent = { // <--- 修改點：M2 的 secondaryText 放入這裡
                 Text(
                     text = user.user.address.orEmpty(),
                     style = TextStyle(Color.LightGray)
+                    // style = MaterialTheme.typography.bodyMedium // M3 中 supporting text 的建議樣式
                 )
             },
-            overlineText = {
-                Text(text = user.user.displayName())
+            leadingContent = { // <--- 修改點：M2 的 icon 對應 M3 的 leadingContent
+                UserProfileImg(
+                    firstName = user.user.firstName,
+                    lastName = user.user.lastName
+                )
             },
-            trailing = {
+            trailingContent = { // <--- 修改點：M2 的 trailing 對應 M3 的 trailingContent
                 TrailingContent(
                     isFavorite = user.user.isFavorite,
                     onDelete = { onDelete(user.user) },
                     addToFavorite = { addToFavorite(user.user.copy(isFavorite = it)) }
                 )
             },
-            icon = {
-                UserProfileImg(
-                    firstName = user.user.firstName,
-                    lastName = user.user.lastName
-                )
-            }
+            // 可選：自定義 ListItem 的顏色
+            // colors = ListItemDefaults.colors(
+            //    containerColor = Color.White // 示例背景色
+            // )
+            modifier = Modifier // 可以根據需要添加 modifier
         )
-        Divider(modifier = Modifier.padding(vertical = 8.dp))
+        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
+
 @Composable
 private fun TrailingContent(
     isFavorite: Boolean,

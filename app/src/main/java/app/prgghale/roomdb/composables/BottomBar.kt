@@ -1,6 +1,10 @@
 package app.prgghale.roomdb.composables
 
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Downloading
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -10,7 +14,7 @@ enum class BottomNavItems(val label: String, val icons: ImageVector) {
     Home("Add User", iconFilled.Add),
     Bookings("Users List", iconFilled.AccountBox),
     Favorite("Favorite", iconFilled.Star),
-    Loading("Loading", iconFilled.Email),
+    Loading("Loading", iconFilled.Downloading),
     Profile("Profile", iconFilled.Person),
 }
 

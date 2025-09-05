@@ -9,7 +9,6 @@ import app.prgghale.roomdb.ui.loading.observers.UserProfessionObserver
 import app.prgghale.roomdb.utils.ObservableLoadingCounter
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.zip
 
 class LoadingViewModel(
     private val userObserver: UserObserver,

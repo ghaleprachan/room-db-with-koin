@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -84,7 +84,7 @@ fun HomeScreen(
 }
 
 // FIXME change way of using professions on ui
-@OptIn(ExperimentalMaterial3Api::class, androidx.compose.material.ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class,)
 @Composable
 private fun HomeScreenContent(
     addUser: (user: UserTable) -> Unit,
@@ -135,18 +135,21 @@ private fun HomeScreenContent(
                 }
             }
 
-            DropdownMenu(expanded = dropDownState, onDismissRequest = {
-                dropDownState = !dropDownState
-            }) {
-                professions.forEach {
+
+            DropdownMenu(
+                expanded = dropDownState,
+                onDismissRequest = {
+                    dropDownState = !dropDownState
+                }
+            ) {
+                professions.forEach { profession -> // 更改變數名稱以避免與外部 selectedProfession 混淆
                     DropdownMenuItem(
+                        text = { Text(text = profession.professionName.orEmpty()) }, // <--- 修改點：將 Text 放入 text 參數
                         onClick = {
                             dropDownState = !dropDownState
-                            selectedProfession = it
-                        },
-                    ) {
-                        Text(text = it.professionName.orEmpty())
-                    }
+                            selectedProfession = profession
+                        }
+                    )
                 }
             }
         }

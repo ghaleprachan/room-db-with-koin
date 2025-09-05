@@ -6,9 +6,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -56,12 +56,16 @@ private fun SearchContent(state: SearchViewState, action: (SearchAction) -> Unit
                 action.invoke(SearchAction.Search(searchTerm = it.text))
             },
             placeholder = { Text(text = "Search user", color = Color(0xFF666262)) },
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color(0xFFF5F4F4),
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-                errorIndicatorColor = Color.Transparent,
+            colors = TextFieldDefaults.colors(
+                unfocusedContainerColor = Color(0xFFF5F4F4),
+                focusedContainerColor = Color(0xFFF5F4F4),
+                disabledContainerColor = Color(0xFFF5F4F4), // 考慮禁用時的顏色
+                errorContainerColor = Color(0xFFF5F4F4),   // 考慮錯誤時的顏色
+
+                focusedIndicatorColor = Color.Transparent,    // 保持不變
+                unfocusedIndicatorColor = Color.Transparent,  // 保持不變
+                disabledIndicatorColor = Color.Transparent,   // 保持不變
+                errorIndicatorColor = Color.Transparent
             ),
         )
         16.Height()
