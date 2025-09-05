@@ -13,21 +13,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
 import app.prgghale.roomdb.composables.ShowDialog
-import app.prgghale.roomdb.data.domain.UserProfession
-import app.prgghale.roomdb.data.table.ProfessionTable
 import app.prgghale.roomdb.extesion.Height
 import app.prgghale.roomdb.ui.loading.rememberFlowWithLifecycle
 import app.prgghale.roomdb.ui.userlist.UserItem
-import org.koin.androidx.compose.getViewModel
-
+import org.koin.compose.viewmodel.koinViewModel
 @Composable
-fun SearchScreen(viewModel: SearchViewModel = getViewModel()) {
+fun SearchScreen(viewModel: SearchViewModel = koinViewModel()) {
     val viewState by rememberFlowWithLifecycle(flow = viewModel.state)
         .collectAsState(initial = SearchViewState.Empty)
 

@@ -20,13 +20,15 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.prgghale.roomdb.composables.AppScaffold
 import app.prgghale.roomdb.composables.NoDataLottie
 import app.prgghale.roomdb.composables.UserProfileImg
 import app.prgghale.roomdb.data.table.UserTable
 import app.prgghale.roomdb.extesion.Width
 import app.prgghale.roomdb.ui.home.UserViewModel
-import org.koin.androidx.compose.getViewModel
+import app.prgghale.roomdb.composables.NoDataLottie
+import app.prgghale.roomdb.composables.UserProfileImg
+import app.prgghale.roomdb.extesion.Width
+import org.koin.compose.viewmodel.koinViewModel
 
 @Preview(showSystemUi = true, device = Devices.PIXEL_4_XL)
 @Composable
@@ -48,7 +50,7 @@ fun FavoriteItemPreView() {
 
 @Composable
 fun FavoriteScreen(
-    userViewModel: UserViewModel = getViewModel()
+    userViewModel: UserViewModel = koinViewModel() // Changed to koinViewModel
 ) {
     val favUserState = userViewModel.favoriteUsers.observeAsState()
     var isFirstTime by remember { mutableStateOf(true) }

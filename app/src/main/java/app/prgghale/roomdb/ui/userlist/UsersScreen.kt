@@ -1,7 +1,6 @@
 package app.prgghale.roomdb.ui.userlist
 
 import androidx.compose.animation.*
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -28,26 +27,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.prgghale.roomdb.composables.*
 import app.prgghale.roomdb.data.domain.UserProfession
-import app.prgghale.roomdb.data.domain.UserProfessionT
 import app.prgghale.roomdb.data.table.UserTable
-import app.prgghale.roomdb.extesion.toJson
 import app.prgghale.roomdb.extesion.toastS
 import app.prgghale.roomdb.iconFilled
 import app.prgghale.roomdb.iconOutlined
 import app.prgghale.roomdb.ui.home.UserViewModel
 import app.prgghale.roomdb.utils.UiStates
-import coil.compose.rememberImagePainter
-import coil.transform.CircleCropTransformation
-import org.koin.androidx.compose.getViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Preview(showSystemUi = true)
 @Composable
 private fun UsersPreview() {
     UsersContent(users = emptyList(), {}, {})
 }
-
 @Composable
-fun UsersScreen(usersViewModel: UserViewModel = getViewModel()) {
+fun UsersScreen(usersViewModel: UserViewModel = koinViewModel()) {
     val context = LocalContext.current
 
     val usersState = usersViewModel.userProfession.collectAsState()

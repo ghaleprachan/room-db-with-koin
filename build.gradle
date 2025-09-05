@@ -10,11 +10,7 @@ buildscript {
         jb_compose_version = libs.versions.jetbrains.compose.multiplatform.get()
         roomVersion=libs.versions.room.get()
         navigation_version = libs.versions.androidx.navigation.get()
-
-        composeVersion = '1.1.0-beta04'
-        koinVersion = '3.1.2'
         retrofitVersion = '2.9.0'
-        composeNavigation = '2.4.0-beta02'
     }
 
     println "Show  fianl kotlin_version  : ${kotlin_version}"

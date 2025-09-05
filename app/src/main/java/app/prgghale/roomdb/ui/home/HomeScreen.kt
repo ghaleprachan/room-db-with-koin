@@ -27,14 +27,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.prgghale.roomdb.composables.AppScaffold
 import app.prgghale.roomdb.composables.CustomTextField
 import app.prgghale.roomdb.data.table.ProfessionTable
 import app.prgghale.roomdb.data.table.UserTable
 import app.prgghale.roomdb.extesion.Height
 import app.prgghale.roomdb.extesion.toastS
 import app.prgghale.roomdb.utils.UiStates
-import org.koin.androidx.compose.getViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
@@ -45,7 +44,7 @@ fun HomePreView() {
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun HomeScreen(
-    userViewModel: UserViewModel = getViewModel()
+    userViewModel: UserViewModel = koinViewModel(),
 ) {
     val onCreate = remember { mutableStateOf(true) }
 

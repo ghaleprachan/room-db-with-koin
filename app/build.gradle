@@ -70,7 +70,6 @@ ksp {
 }
 
 dependencies {
-
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
@@ -96,15 +95,17 @@ dependencies {
 
     implementation (libs.androidx.compose.runtime.livedata)
     // Koin
-    implementation "io.insert-koin:koin-android:$koinVersion"
-    implementation "io.insert-koin:koin-androidx-compose:$koinVersion"
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.compose.viewmodel)
 
     // RoomDatabase
     // Room components
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.sqlite.bundled)
-
+//    implementation project(':common')
     ksp(libs.androidx.room.compiler)
 
     // Coil
@@ -117,9 +118,9 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation "androidx.room:room-testing:$roomVersion"
+//    androidTestImplementation "androidx.room:room-testing:$roomVersion"
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$composeVersion"
-    debugImplementation "androidx.compose.ui:ui-tooling:$composeVersion"
+//    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$composeVersion"
+//    debugImplementation "androidx.compose.ui:ui-tooling:$composeVersion"
 }
