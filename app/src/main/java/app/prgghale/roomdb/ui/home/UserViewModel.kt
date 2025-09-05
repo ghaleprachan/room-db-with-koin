@@ -1,7 +1,5 @@
 package app.prgghale.roomdb.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.prgghale.roomdb.data.domain.UserProfession
@@ -11,42 +9,40 @@ import app.prgghale.roomdb.data.table.ProfessionTable
 import app.prgghale.roomdb.data.table.UserTable
 import app.prgghale.roomdb.utils.UiStates
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class UserViewModel(
-    private val userRepository: UserRepository
-) : ViewModel() {
-
+class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
     /**
      * Adds user into database*/
-    private val _addUser = MutableLiveData<UiStates<Boolean>>()
-    val addUser: LiveData<UiStates<Boolean>> = _addUser
+    private val _addUser = MutableStateFlow<UiStates<Boolean>>(UiStates.None<Boolean>()) // Provide type argument and call constructor
+    val addUser: StateFlow<UiStates<Boolean>> = _addUser.asStateFlow()
     fun addUser(user: UserTable) = viewModelScope.launch {
-        _addUser.value = UiStates.Loading()
+        _addUser.value = UiStates.Loading() // Assuming Loading() can infer or also takes <Boolean>()
+        // If Loading is also generic: _addUser.value = UiStates.Loading<Boolean>()
         _addUser.value = userRepository.addUser(user = user)
     }
-
     /**
      * gets list of users*/
-    private val _users = MutableLiveData<UiStates<List<UserTable>>>()
-    val users: LiveData<UiStates<List<UserTable>>> = _users
+    private val _users = MutableStateFlow<UiStates<List<UserTable>>>(UiStates.None()) // Initial state
+    val users: StateFlow<UiStates<List<UserTable>>> = _users.asStateFlow()
+
     fun getUsers() = viewModelScope.launch {
         _users.value = UiStates.Loading()
-        delay(900)
+        delay(900) // Keep delay if it's for simulating network or debouncing
         _users.value = userRepository.getUsers()
     }
 
     /**
      * List of users by joining table with profession*/
     private val _userProfession =
-        MutableStateFlow<UiStates<List<UserProfession>>?>(null)
-    val userProfession: StateFlow<UiStates<List<UserProfession>>?> = _userProfession
+        MutableStateFlow<UiStates<List<UserProfession>>>(UiStates.None()) // Initial state, UiStates.Loading() if it should load immediately
+    val userProfession: StateFlow<UiStates<List<UserProfession>>> = _userProfession.asStateFlow()
+
     fun getUserProfession() = viewModelScope.launch {
         _userProfession.value = UiStates.Loading()
-        delay(1000)
+        delay(1000) // Keep delay if it's for simulating network or debouncing
         _userProfession.value = userRepository.getUserProfession()
     }
 
@@ -58,8 +54,9 @@ class UserViewModel(
 
     /**
     Deletes User*/
-    private val _delete = MutableLiveData<UiStates<Boolean>>()
-    val delete: LiveData<UiStates<Boolean>> = _delete
+    private val _delete = MutableStateFlow<UiStates<Boolean>>(UiStates.None()) // Initial state
+    val delete: StateFlow<UiStates<Boolean>> = _delete.asStateFlow()
+
     fun deleteUser(user: UserTable) = viewModelScope.launch {
         _delete.value = UiStates.Loading()
         _delete.value = userRepository.deleteUser(user = user)
@@ -67,24 +64,26 @@ class UserViewModel(
 
     /**
      * List of all professions*/
-    private val _professions = MutableStateFlow(emptyList<ProfessionTable>())
-    val professions: StateFlow<List<ProfessionTable>> = _professions
+    private val _professions = MutableStateFlow<List<ProfessionTable>>(emptyList())
+    val professions: StateFlow<List<ProfessionTable>> = _professions.asStateFlow()
     fun getProfessions() = viewModelScope.launch {
-        _professions.value = userRepository.getProfessions()
+        val fetchedProfessions = userRepository.getProfessions()
+        _professions.value = fetchedProfessions
     }
 
     /**
      * Update table*/
-    private val _updateTable = MutableStateFlow<UiStates<Boolean>>(UiStates.Loading())
-    val updateTable: StateFlow<UiStates<Boolean>> = _updateTable
+    private val _updateTable = MutableStateFlow<UiStates<Boolean>>(UiStates.Loading()) // Initial state
+    val updateTable: StateFlow<UiStates<Boolean>> = _updateTable.asStateFlow()
     fun updateTable(user: UserTable) = viewModelScope.launch {
+        _updateTable.value = UiStates.Loading()
         _updateTable.value = userRepository.updateUser(user)
     }
 
     /**
      * Get list of favorite users*/
-    private val _favoriteUsers = MutableLiveData<List<UserTable>>()
-    val favoriteUsers: LiveData<List<UserTable>> = _favoriteUsers
+    private val _favoriteUsers = MutableStateFlow<List<UserTable>>(emptyList())
+    val favoriteUsers: StateFlow<List<UserTable>> = _favoriteUsers.asStateFlow()
     fun getFavoriteUsers() = viewModelScope.launch {
         _favoriteUsers.value = userRepository.getFavoriteUsers()
     }
@@ -106,5 +105,4 @@ class UserViewModel(
         usersF.combine(professionF) { user, profession ->
             UiStates.Success(data = UserProfessionT(user = user.data, profession = profession.data))
         }.flowOn(context = Dispatchers.IO)
-
 }

@@ -15,7 +15,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,7 +44,7 @@ fun UsersScreen(usersViewModel: UserViewModel = koinViewModel()) {
     val context = LocalContext.current
 
     val usersState = usersViewModel.userProfession.collectAsState()
-    val deleteState = usersViewModel.delete.observeAsState()
+    val deleteState = usersViewModel.delete.collectAsState()
     val updateState = usersViewModel.updateTable.collectAsState()
 
     val getData = remember { mutableStateOf(true) }

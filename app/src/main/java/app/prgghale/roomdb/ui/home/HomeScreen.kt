@@ -15,7 +15,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -52,7 +51,7 @@ fun HomeScreen(
     val keyboardState = LocalFocusManager.current
     // val state = LocalSoftwareKeyboardController.current
 
-    val addUserState = userViewModel.addUser.observeAsState()
+    val addUserState by userViewModel.addUser.collectAsState()
     var formState by remember { mutableStateOf(UserFormState()) }
 
     val professions = userViewModel.professions.collectAsState()
@@ -66,7 +65,7 @@ fun HomeScreen(
         professions = professions.value
     )
 
-    when (val state = addUserState.value) {
+    when (val state = addUserState) {
         is UiStates.Loading -> {  /*DO Nothing*/
         }
         is UiStates.Success -> {

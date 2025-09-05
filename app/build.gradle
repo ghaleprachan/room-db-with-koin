@@ -96,7 +96,6 @@ dependencies {
     implementation(libs.jetbrains.androidx.lifecycle.viewmodel)
     implementation(libs.jetbrains.androidx.lifecycle.viewmodel.compose)
 
-    implementation (libs.androidx.compose.runtime.livedata)
     // Koin
     implementation(libs.koin.core)
     implementation(libs.koin.android)
@@ -118,8 +117,6 @@ dependencies {
     // Lottie Animation
     implementation 'com.airbnb.android:lottie-compose:6.6.7'
 
-    // GSON
-//    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
     testImplementation 'junit:junit:4.13.2'
 //    androidTestImplementation "androidx.room:room-testing:$roomVersion"

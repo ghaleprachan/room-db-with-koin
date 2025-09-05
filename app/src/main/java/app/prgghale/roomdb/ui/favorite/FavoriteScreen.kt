@@ -8,7 +8,6 @@ import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,7 +51,7 @@ fun FavoriteItemPreView() {
 fun FavoriteScreen(
     userViewModel: UserViewModel = koinViewModel() // Changed to koinViewModel
 ) {
-    val favUserState = userViewModel.favoriteUsers.observeAsState()
+    val favUserState by userViewModel.favoriteUsers.collectAsState()
     var isFirstTime by remember { mutableStateOf(true) }
     if (isFirstTime) {
         isFirstTime = false
@@ -60,7 +59,7 @@ fun FavoriteScreen(
     }
 
     FavoriteContent(
-        favUsers = favUserState.value
+        favUsers = favUserState
     )
 }
 
