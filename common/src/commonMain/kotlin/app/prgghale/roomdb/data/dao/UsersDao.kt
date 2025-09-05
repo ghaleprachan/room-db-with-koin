@@ -12,10 +12,10 @@ import app.prgghale.roomdb.data.table.UserTable
 interface UsersDao : BaseDao<UserTable> {
 
     @Query("SELECT * FROM user_table")
-    fun getUsers(): List<UserTable>
+    suspend fun getUsers(): List<UserTable>
 
     @Query("DELETE FROM user_table")
-    fun deleteAll()
+    suspend fun deleteAll()
 
     @Query(
         """
@@ -24,14 +24,14 @@ interface UsersDao : BaseDao<UserTable> {
                 ON user_table.profession = profession_table.profession_id
             """
     )
-    fun getUserProfession(): List<UserProfession>
+    suspend fun getUserProfession(): List<UserProfession>
 
     @Query(
         """
         SELECT * FROM user_table WHERE isFavorite=:isFavorite
     """
     )
-    fun getFavoriteUsers(isFavorite: Boolean = true): List<UserTable>
+    suspend fun getFavoriteUsers(isFavorite: Boolean = true): List<UserTable>
 
     @Query(
         """
@@ -41,12 +41,12 @@ interface UsersDao : BaseDao<UserTable> {
                 WHERE firstName LIKE :filter
     """
     )
-    fun search(filter: String): List<UserProfession>
+    suspend fun search(filter: String): List<UserProfession>
 
     @Query(
         """
             SELECT * FROM user_table LIMIT :count OFFSET :offset
         """
     )
-    fun paginatedUsers(count: Int, offset: Int): List<UserTable>
+    suspend fun paginatedUsers(count: Int, offset: Int): List<UserTable>
 }

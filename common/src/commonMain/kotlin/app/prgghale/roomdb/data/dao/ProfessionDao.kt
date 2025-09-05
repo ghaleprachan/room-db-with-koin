@@ -7,5 +7,5 @@ import app.prgghale.roomdb.data.table.ProfessionTable
 @Dao
 interface ProfessionDao : BaseDao<ProfessionTable> {
     @Query("SELECT * FROM profession_table")
-    fun getAllProfessions(): List<ProfessionTable>
+    suspend fun getAllProfessions(): List<ProfessionTable>
 }
