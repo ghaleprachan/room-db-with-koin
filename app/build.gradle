@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -72,6 +73,8 @@ ksp {
 dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.serialization.core)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.coroutines.android)
 
     implementation (libs.androidx.core.ktx)
@@ -115,7 +118,7 @@ dependencies {
     implementation 'com.airbnb.android:lottie-compose:4.2.0'
 
     // GSON
-    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+//    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
     testImplementation 'junit:junit:4.13.2'
 //    androidTestImplementation "androidx.room:room-testing:$roomVersion"
