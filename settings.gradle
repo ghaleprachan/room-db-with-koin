@@ -106,3 +106,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Room DB"
 include ':app'
+include ':common'

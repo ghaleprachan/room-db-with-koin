@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Query
 import app.prgghale.roomdb.data.domain.UserProfession
 import app.prgghale.roomdb.data.table.UserTable
-import java.util.concurrent.Flow
 
 /**
  * NOTE

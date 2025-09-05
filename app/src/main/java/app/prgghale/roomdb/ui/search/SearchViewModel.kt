@@ -2,20 +2,15 @@ package app.prgghale.roomdb.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.PrimaryKey
 import app.prgghale.roomdb.data.dao.UsersDao
 import app.prgghale.roomdb.data.domain.UserProfession
 import app.prgghale.roomdb.data.repository.UserRepository
-import app.prgghale.roomdb.data.table.UserTable
 import app.prgghale.roomdb.domain.SuspendingWorkInteractor
 import app.prgghale.roomdb.utils.ObservableLoadingCounter
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.concurrent.atomic.AtomicInteger
 
 class SearchViewModel(
     private val searchUser: SearchUser

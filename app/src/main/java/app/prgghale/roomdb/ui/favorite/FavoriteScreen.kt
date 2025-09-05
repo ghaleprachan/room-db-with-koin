@@ -24,9 +24,6 @@ import app.prgghale.roomdb.composables.UserProfileImg
 import app.prgghale.roomdb.data.table.UserTable
 import app.prgghale.roomdb.extesion.Width
 import app.prgghale.roomdb.ui.home.UserViewModel
-import app.prgghale.roomdb.composables.NoDataLottie
-import app.prgghale.roomdb.composables.UserProfileImg
-import app.prgghale.roomdb.extesion.Width
 import org.koin.compose.viewmodel.koinViewModel
 
 @Preview(showSystemUi = true, device = Devices.PIXEL_4_XL)

@@ -1,20 +1,14 @@
 package app.prgghale.roomdb.data.repository
 
 import android.util.Log
-import androidx.compose.runtime.collectAsState
 import app.prgghale.roomdb.data.dao.ProfessionDao
 import app.prgghale.roomdb.data.dao.UsersDao
 import app.prgghale.roomdb.data.domain.UserProfession
-import app.prgghale.roomdb.data.domain.UserProfessionT
 import app.prgghale.roomdb.data.table.ProfessionTable
 import app.prgghale.roomdb.data.table.UserTable
 import app.prgghale.roomdb.utils.UiStates
 import app.prgghale.roomdb.utils.handleTryCatch
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flow
 import java.lang.Exception
 
 interface UserRepository {

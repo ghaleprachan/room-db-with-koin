@@ -3,7 +3,7 @@ package app.prgghale.roomdb.data.table
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import java.util.*
+import com.benasher44.uuid.uuid4
 
 @Entity(
     tableName = "user_table",
@@ -18,7 +18,7 @@ import java.util.*
 )
 data class UserTable(
     @PrimaryKey
-    val id: String = UUID.randomUUID().toString(),
+    val id: String = uuid4().toString(),
     val firstName: String?,
     val lastName: String?,
     val address: String?,

@@ -13,8 +13,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import app.prgghale.roomdb.data.table.UserTable
-import app.prgghale.roomdb.ui.home.UserViewModel
 import app.prgghale.roomdb.utils.UiStates
 
 @Composable
