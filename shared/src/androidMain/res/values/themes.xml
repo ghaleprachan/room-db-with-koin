@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme. -->
+    <!--    <style name="Theme.RoomDB" parent="android:Theme.Material.Light.NoActionBar" >--><!-- can use at ComponentActivity-->
+    <!--    <style name="Theme.RoomDB" parent="android:Theme.Material.Light.DarkActionBar"> --><!--  not work -->
+    <!--    <style name="Theme.RoomDB" parent="android:Theme.Material.Light">--><!-- not work -->
+    <!--   <style name="Theme.RoomDB" parent="Theme.MaterialComponents.DayNight.DarkActionBar"> --> <!--  dep com.google.android.material:material-->
+    <!--    <style name="Theme.RoomDB" parent="Theme.AppCompat.Light">&lt;!&ndash;  dep androidx.appcompat:appcompat &ndash;&gt;-->
+    <!--        <item name="windowActionBar">false</item>-->
+    <!--        <item name="windowNoTitle">true</item>-->
+    <!--    </style>-->
+    <style name="Theme.RoomDB" parent="android:Theme.Material.Light.DarkActionBar"><!--  dep androidx.appcompat:appcompat -->
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:statusBarColor">#FF018786</item>
+    </style>
+</resources>

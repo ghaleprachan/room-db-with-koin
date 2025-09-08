@@ -1,16 +1,24 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    //Ref : https://developer.android.com/jetpack/androidx/releases/compose-kotlin#groovy
+    alias(libs.plugins.jetbrains.compose)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
-    compileSdk 31
-
+    compileSdk 36
+    namespace = "app.prgghale.roomdb"
+    buildFeatures {
+        compose true
+    }
     defaultConfig {
-        applicationId "app.prgghale.roomdb"
+        applicationId = "app.prgghale.roomdb"
         minSdk 21
-        targetSdk 31
+        targetSdk 36
         versionCode 1
         versionName "1.0"
 
@@ -26,73 +34,95 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
+
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_11.toString()
         freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
-    buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion composeVersion
-    }
+
     packagingOptions {
         resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            excludes += "META-INF/*"
+            excludes += "META-INF/INDEX.LIST"
+            excludes += "META-INF/*.kotlin_module"
+            excludes += "META-INF/LICENSE"
+            excludes += "META-INF/LICENSE.txt"
+            excludes += "META-INF/NOTICE"
+            excludes += "META-INF/io.netty.versions.properties"
+            excludes += "META-INF/AL2.0"
+            excludes += "META-INF/LGPL2.1"
         }
     }
 }
 
+room {
+    schemaDirectory("$projectDir/schemas")
+    generateKotlin = true
+}
+
+ksp {
+    arg("KOIN_DEFAULT_MODULE", "true")
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
 dependencies {
+    implementation(libs.kotlin.stdlib)
 
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation(libs.kotlinx.serialization.core)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.coroutines.android)
 
-    implementation "androidx.compose.ui:ui:$composeVersion"
-    implementation "androidx.compose.material:material:$composeVersion"
-    implementation "androidx.compose.ui:ui-tooling-preview:$composeVersion"
-    implementation "androidx.compose.animation:animation:$composeVersion"
-    implementation "androidx.compose.runtime:runtime-livedata:$composeVersion"
-    implementation "androidx.compose.material:material-icons-extended:$composeVersion"
+    implementation (libs.androidx.core.ktx)
+    implementation(libs.androidx.activity.compose)
+
+    implementation(compose.ui)
+    implementation(compose.runtime)
+    implementation(compose.foundation)
+    implementation(compose.animation)
+    implementation(compose.material)
+    implementation(compose.material3)
+    implementation(compose.materialIconsExtended)
+    implementation(compose.components.resources)
+    implementation(compose.components.uiToolingPreview)
+    implementation(compose.preview)
+    implementation(compose.uiTooling)
 
     // Compose Navigation
-    implementation "androidx.navigation:navigation-compose:$composeNavigation"
-
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
-    implementation 'androidx.activity:activity-compose:1.4.0'
-
-    // Material 3
-    implementation "androidx.compose.material3:material3:1.0.0-alpha02"
-
-    // Compose viewModel (getViewModel())
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0"
+    implementation(libs.jetbrains.androidx.navigation.compose)
+    implementation(libs.jetbrains.androidx.lifecycle.viewmodel)
+    implementation(libs.jetbrains.androidx.lifecycle.viewmodel.compose)
 
     // Koin
-    implementation "io.insert-koin:koin-android:$koinVersion"
-    implementation "io.insert-koin:koin-androidx-compose:$koinVersion"
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.compose.viewmodel)
 
     // RoomDatabase
     // Room components
-    implementation "androidx.room:room-runtime:$roomVersion"
-    implementation "androidx.room:room-ktx:$roomVersion"
-    kapt "androidx.room:room-compiler:$roomVersion"
-    androidTestImplementation "androidx.room:room-testing:$roomVersion"
-
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.sqlite.bundled)
+    implementation project(':common')
+    ksp(libs.androidx.room.compiler)
+    implementation project(':shared')
     // Coil
-    implementation "io.coil-kt:coil-compose:1.4.0"
+    implementation(libs.coil)
+    implementation(libs.coil.compose)
 
     // Lottie Animation
-    implementation 'com.airbnb.android:lottie-compose:4.2.0'
+    implementation 'com.airbnb.android:lottie-compose:6.6.7'
 
-    // GSON
-    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
     testImplementation 'junit:junit:4.13.2'
+//    androidTestImplementation "androidx.room:room-testing:$roomVersion"
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$composeVersion"
-    debugImplementation "androidx.compose.ui:ui-tooling:$composeVersion"
+//    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$composeVersion"
+//    debugImplementation "androidx.compose.ui:ui-tooling:$composeVersion"
 }
