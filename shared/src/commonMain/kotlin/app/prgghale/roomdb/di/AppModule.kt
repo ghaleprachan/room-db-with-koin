@@ -4,7 +4,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import org.koin.dsl.module
-
+import kotlinx.coroutines.IO
 /**
  * @author[Prachan Ghale] Updated on 1-25-2022
  * */
