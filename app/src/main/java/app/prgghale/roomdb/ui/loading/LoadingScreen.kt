@@ -43,6 +43,7 @@ private fun LoadingContent(viewState: State<LoadingViewState>, refresh: () -> Un
                     Text(text = "Profession ${it.professionName}")
                 }
             }
+            else -> {}
         }
         /*viewState.value.?. forEach {
             Text(text = "User ${it.displayName()}")
